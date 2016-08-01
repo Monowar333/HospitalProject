@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <listener>
+        <description>ServletContextListener</description>
+        <listener-class>com.hospital.Servlets.AllUsers.ContextListener</listener-class>
+    </listener>
+    <listener>
+        <description>HttpSessionListener</description>
+        <listener-class>com.hospital.Servlets.AllUsers.RequestListener</listener-class>
+    </listener>
+    <filter-mapping>
+        <filter-name>AuntiAllUsers</filter-name>
+<!--        <filter-name>AuthFilterAdmin</filter-name>
+         <filter-name>AuntiRegistry</filter-name>-->
+        <servlet-name>Specialization</servlet-name>
+        <servlet-name>EditDoc</servlet-name>
+        <servlet-name>AddDoctors</servlet-name>
+        <servlet-name>DeleteDoc</servlet-name>
+        <servlet-name>DeleteSpecalization</servlet-name>
+        <servlet-name>RegistrpageDoctor</servlet-name>
+        <servlet-name>Specialization</servlet-name>
+        <servlet-name>StartpageAdminCabinet</servlet-name>
+        <servlet-name>SelectDoctorsForAllUsers</servlet-name>
+        <servlet-name>SelectSpecialAllUsers</servlet-name>
+        <servlet-name>StartServlet</servlet-name>
+        <servlet-name>AddCard</servlet-name>
+        <servlet-name>AuntiRegistry</servlet-name>
+        <servlet-name>DeleteCard</servlet-name>
+        <servlet-name>EditCard</servlet-name>
+        <servlet-name>StartPageRegistry</servlet-name>
+        
+    </filter-mapping>
+
+    <filter-mapping>
+        
+        <filter-name>AuthFilterAdmin</filter-name>
+        <servlet-name>Specialization</servlet-name>
+        <servlet-name>EditDoc</servlet-name>
+        <servlet-name>AddDoctors</servlet-name>
+        <servlet-name>DeleteDoc</servlet-name>
+        <servlet-name>DeleteSpecalization</servlet-name>
+        <servlet-name>RegistrpageDoctor</servlet-name>
+        <servlet-name>Specialization</servlet-name>
+         <servlet-name>StartpageAdminCabinet</servlet-name>
+        
+    </filter-mapping>
+    
+    <filter-mapping>
+        
+        <filter-name>AuntiRegistry</filter-name>
+        <servlet-name>AddCard</servlet-name>
+        <servlet-name>AuntiRegistry</servlet-name>
+        <servlet-name>DeleteCard</servlet-name>
+        <servlet-name>EditCard</servlet-name>
+        <servlet-name>StartPageRegistry</servlet-name>
+        
+    </filter-mapping>
+  
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    <welcome-file-list>
+        <welcome-file>StartServlet</welcome-file>
+    </welcome-file-list>
+</web-app>
