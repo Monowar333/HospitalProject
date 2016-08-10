@@ -37,7 +37,7 @@ import javax.servlet.http.HttpServletRequest;
 public class AuntiAllUsers implements Filter {
      private FilterConfig filterConfig = null;
     
-    public AuntiAllUsers() {
+     public AuntiAllUsers() {
     }    
     
     @Override
@@ -49,13 +49,14 @@ public class AuntiAllUsers implements Filter {
         Cookie[] cookies = ((HttpServletRequest)request).getCookies();
         Cookie auntlink = null;
         System.out.println("Filtr working");
+        if (cookies != null){
         for(Cookie c : cookies){
             if(c.getName().equals("auntlink")){
                     auntlink = c;
             }
         }    
         if((auntlink == null || auntlink.getValue() == "")){
-             System.out.println(auntlink.getValue() + "dasd");   
+            // System.out.println(auntlink.getValue() + "dasd");   
             request.setAttribute("info", false);
               chain.doFilter(request, response);
             
@@ -81,7 +82,9 @@ public class AuntiAllUsers implements Filter {
                   chain.doFilter(request, response);  
             }
         }
-//             chain.doFilter(request, response);
+        }
+                    request.setAttribute("info", false); 
+                  chain.doFilter(request, response);
     }
 
     @Override
