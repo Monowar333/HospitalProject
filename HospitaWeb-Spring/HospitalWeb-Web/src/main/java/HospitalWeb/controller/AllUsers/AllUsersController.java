@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -40,17 +41,19 @@ public class AllUsersController {
         model.setViewName("AllUsers/StartPage");
         return model;
     }
-        @RequestMapping(value = {"/Special/{id}","/**/Special/{id}"}, method = {RequestMethod.GET})
-    public ModelAndView getDoctorsList(
-            @PathVariable("id")int id){
-        ModelAndView model = new ModelAndView();
-        Spcialialization spec = specService.getById(id);
-        List<Users> userspec = userService.getBySpec(spec);
-        model.addObject("users",userspec);
-        model.addObject("Specialalization",specService.getList());
-        model.setViewName("AllUsers/DoctorsForSpecialization");
-        return model;
-    }
+        @RequestMapping(value = {"/Special/{id}","/**/Special/{id}"}, method = {RequestMethod.GET, RequestMethod.POST})
+        @ResponseBody
+        public ModelAndView getDoctorsList(
+                @PathVariable("id")int id){
+            ModelAndView model = new ModelAndView();
+            Spcialialization spec = specService.getById(id);
+            List<Users> userspec = userService.getBySpec(spec);
+                System.out.println(id + "  fsdfsdfsdfs");
+            model.addObject("users",userspec);
+            model.addObject("Specialalization",specService.getList());
+            model.setViewName("/AllUsers/DoctorsForSpecialization");
+            return model;
+        }
     
     @RequestMapping(value = {"/Special/SelectDoctors/{id}","/**/Special/SelectDoctors/{id}"}, method = {RequestMethod.GET})
     public ModelAndView getSelectDoctor(

@@ -162,7 +162,7 @@ public class UserServiceImpl implements UserService{
         Integer i  = null;
         Users u = o;
         try{
-            usersDao.save(o);
+           i =  usersDao.save(u);
             if(i == null){
                 throw new ODEException("invalid save");
             }

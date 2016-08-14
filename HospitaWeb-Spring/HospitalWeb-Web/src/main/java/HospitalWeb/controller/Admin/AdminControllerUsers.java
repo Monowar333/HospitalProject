@@ -11,13 +11,14 @@ import HospitalWeb.service.SpecialalizationService;
 import HospitalWeb.service.UserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.PlaintextPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 /**
  *
  * @author Жека
@@ -30,7 +31,7 @@ public class AdminControllerUsers {
      @Autowired
      UserService userService;
      
-     @RequestMapping(value = {"**/admincabinet"}, method = {RequestMethod.GET})
+     @RequestMapping(value = {"**/admin/admincabinet"}, method = {RequestMethod.GET})
     public ModelAndView getUsersList(){
         ModelAndView model = new ModelAndView();
         List<Users> uList = userService.getList();
@@ -40,7 +41,7 @@ public class AdminControllerUsers {
         return model;
     }
     
-        @RequestMapping(value = {"/useredit/{id}"}, method = {RequestMethod.GET})
+        @RequestMapping(value = {"/admin/useredit/{id}"}, method = {RequestMethod.GET})
         public ModelAndView getUsersById(
                 @PathVariable("id")int id){
             ModelAndView model = new ModelAndView();
@@ -51,18 +52,21 @@ public class AdminControllerUsers {
             return model;
         }
         
-          @RequestMapping(value = {"/userdelete/{id}"}, method = {RequestMethod.GET})
+          @RequestMapping(value = {"/admin/userdelete/{id}"}, method = {RequestMethod.GET})
            public String deleteUsers(
                 @PathVariable("id")int id){
+               
                System.out.println("HospitalWeb.controller.Admin.AdminControllerUsers.deleteUsers()" + id);
-             userService.changeStatus(id);
+             if (!(("admin").equals(userService.getById(id).getStatus()))){
+                 userService.changeStatus(id);
+             }
 //            model.addObject("Specialalization",specService.getList());
 //            model.setViewName("Admin/edituser");
 //            model.addObject("user", user);
-             return "redirect:/admincabinet";
+             return "redirect:/admin/admincabinet";
         }
 
-        @RequestMapping(value = {"/useredit/saveuser/{id}"}, method = {RequestMethod.POST})
+        @RequestMapping(value = {"/admin/useredit/saveuser/{id}"}, method = {RequestMethod.POST})
        public String updateUser(
                @PathVariable("id")int id,
                @RequestParam("firstname") String firstname,
@@ -74,7 +78,7 @@ public class AdminControllerUsers {
                @RequestParam("Email") String email,
                @RequestParam("Group") String Group) {
            ModelAndView mv = new ModelAndView();
-           Users user = userService.getById(id);
+           Users user = new Users();
             user.setName(firstname);    
             user.setSnme(lastname);
             user.setStatus(Group);
@@ -87,20 +91,49 @@ public class AdminControllerUsers {
    //        usersService.updateUser(user);
    //        mv.setViewName("user/edituser");
    //        mv.addObject("user", user);
-           return "redirect:/admincabinet";
+           return "redirect:/admin/admincabinet";
         }
-//    
-//      @RequestMapping(value = {"/user/{id}"}, method = {RequestMethod.DELETE})
-//         public String deleteUser(
-//            @PathVariable("id")int id
-//            ) {
-//        ModelAndView mv = new ModelAndView();
-//        Users user = usersService.getById(id);
-//       
-////          usersService.deleteUsers(user);
-////        mv.setViewName("user/edituser");
-////        mv.addObject("user", user);
-//        return "redirect:/users";
-//}
+        
+       @RequestMapping(value = {"/admin/adddoctors"}, method = {RequestMethod.POST})
+           public ModelAndView goToAddUsers(){
+                ModelAndView model = new ModelAndView();
+                model.addObject("Specialalization",specService.getList());
+            model.setViewName("Admin/adddoctors");
+             return model;
+        }
+           
+            @RequestMapping(value = {"/admin/saveuser"}, method = {RequestMethod.POST})
+       public String saveUser(
+               @RequestParam("firstname") String firstname,
+               @RequestParam("LastName") String lastname,
+               @RequestParam("Exp") Integer exp,
+               @RequestParam("Foto") String foto,
+               @RequestParam("Sprcia") Integer sprcia,
+               @RequestParam("Telephon") String telephon,
+               @RequestParam("Email") String email,
+               @RequestParam("Login") String login,
+               @RequestParam("Pasw") String pasw,
+               @RequestParam("Group") String Group) {
+           ModelAndView mv = new ModelAndView();
+           Users user = new Users();
+            user.setName(firstname);    
+            user.setSnme(lastname);
+            user.setStatus(Group);
+            user.setExp(exp);
+            user.setIdspecialization(specService.getById(sprcia));          
+            user.setEmail(email);
+            user.setTelephone(telephon);
+            user.setLogin(login);
+            user.setPassword(new ShaPasswordEncoder().encodePassword("admin", null));
+            System.out.println(user.getPassword());
+            user.setStatusWork(true);  
+            user.setStatusregistr(false);
+            userService.save(user);
+             
+   //        usersService.updateUser(user);
+   //        mv.setViewName("user/edituser");
+   //        mv.addObject("user", user);
+           return "redirect:/admin/admincabinet";
+        }
 }
        

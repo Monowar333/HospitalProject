@@ -32,7 +32,7 @@
     <body>
          
  
-        <form id="loginform" action="/Hospital_new/Registrpage" method="POST">
+        <form id="loginform" action="saveuser" method="POST">
             <ul >
                 <c:forEach var="item" items="${error}">
                     <li>${item}</li>                
@@ -89,15 +89,15 @@
                     <td>
                         <select name="Group" >
                            
-                            <option><%=com.hospital.DAO.User_status.doctors%></option>
-                           <option><%=com.hospital.DAO.User_status.registry%></option>
+                            <option>doctors</option>
+                           <option>registry</option>
                         </select>
                     </td>
                 </tr>
                 <tr>
                     <td>Логин</td>
                     <td>
-                         <input type="text" id="NickName" name="NickName" value="${NickName}" />
+                         <input type="text" id="NickName" name="Login" value="${NickName}" />
                     </td>
                 </tr>
                 <tr>

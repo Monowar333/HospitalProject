@@ -16,7 +16,6 @@
     </head>
     <body>
        <form id="loginform" action="saveuser/${user.id}" method="POST">
-           <input type ="hidden" name = "id" value="${user.id}">
             <ul >
                 <c:forEach var="item" items="${error}">
                     <li>${item}</li>                

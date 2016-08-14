@@ -1,5 +1,6 @@
 <%-- any content can be specified here e.g.: --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page pageEncoding="UTF-8" %>
 <style>
 <%@include  file="style.css" %>
@@ -22,13 +23,19 @@
 						<span>my thoughts rock</span>
 					</div>
 				</a><div>
+                                 
 					<ul> 
+                                            
                                              <c:forEach var="item" items="${Specialalization}">
                                                  <li> 
-                                                    <a href="Special/${item.id}">${item.name}</a>
+                                                     
+                                                     <a  href= "Special/${item.id}" >${item.name}</a>
+                                                     
                                                 </li>
                                              </c:forEach>
                                         </ul> 
+                                    
+
 				</div>
 			</li>
 			<li>
@@ -47,23 +54,29 @@
 					</div>
 				</a>
 			</li>
-                        <form  id ="Login" action="LoginServlet" method="POST">
+                        <form  id ="Login" action="" method="POST">
                         <li>
                             <a>
-                                <c:if test="${info eq 'false'}">
-                                            <span>Username: <input type="text" name="user"></span>                                      
-                                            <span>Password: <input type="password" name="pass"></span>
-                                            <span><input type="submit" id ="b1" value="ВОЙТИ" ></span>
-                                </c:if> 
-                                <c:if test="${info eq 'true'}">
-                                            <span>Добро пожаловать ${username} </span>
-                                            <span><a href="${adress123}?param=${item.id}">Личный кабинет</a></span>
-                                            <input type="button" id ="b2" value="ВЫЙТИ" onclick = "btn(this.id)">
-                                </c:if>
+                                <%--<c:if test="${info eq 'false'}">--%>
+                                    <!--<div class="container" style="width: 300px;">-->
+                                      <sec:authorize access="!isAuthenticated()">
+                                           <!--<input type ="submit"  id ="b1"  onclick = "btn(this.id)" value="input">-->
+                                            <span>Username: <input type="text" class="form-control" name="j_username" placeholder="Email address" required autofocus value=""></span>                                      
+                                            <span>Password: <input type="password" class="form-control" name="j_password" placeholder="Password" required value=""></span>
+                                            <span><input type="submit" id ="b1" value="ВОЙТИ" onclick = "btn(this.id)"></span>
+                                      </sec:authorize>
+                                            <!--</form>-->
+                                    <!--</div>-->
 <!--                                            <span>Username: <input type="text" name="user"></span>                                      
                                             <span>Password: <input type="password" name="pass"></span>
-                                            <span><input type="submit" id ="b1" value="ВОЙТИ" ></span>
-                                            <input type="text" value="${info}">-->
+                                            <span><input type="submit" id ="b1" value="ВОЙТИ" ></span>-->
+                                <%--</c:if>--%> 
+                                 <sec:authorize access="isAuthenticated()">
+                                            <span>Ваш логин: <sec:authentication property="principal.username" /></span>
+                                            <span><a href="${adress123}?param=${item.id}">Личный кабинет</a></span>
+                                             <span><input type="submit" id ="b2" value="ВЫЙТИ" onclick = "btn(this.id)"></span> 
+                                      </sec:authorize>
+                                       
                                            
                             
 
@@ -79,8 +92,24 @@
                 var button = document.getElementById(idb);
                 var act = document.getElementById("Login");
                
-               act.action = (button.id == 'b1') ? "LoginServlet" : "LogoutServlet";
+               act.action = (button.id == 'b1') ? "j_spring_security_check" : "logout";
 //                   act.action = "LoginServlet";
                    act.submit();       
             }
+            </script>
+            <script>
+                        
+                function post(idb){
+                   
+                   var id = idb;
+                    var act = document.getElementById("post");
+               
+               act.action = "Special/"+id;
+//                   act.action = "LoginServlet";
+                   act.submit(); 
+//                   xmlhttp.open('POST', 'http://localhost:8087/HospitalWeb-Web/, false); // Открываем асинхронное соединение
+//                   xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); // Отправляем кодировку
+//                   xmlhttp.send("a=" + encodeURIComponent(id)); // Отправляем POST-запрос
+                }
+        
             </script>

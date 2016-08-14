@@ -32,7 +32,7 @@ function btn1(idb){
                 var act = document.getElementById("Action");
 
               if(button.id == 'b3'){
-                act.action =  "/Hospital_new/specialization";
+                act.action =  "/adddoctors";
               } else  if(button.id == 'b4'){
                   act.action =  "/Hospital_new/AddDoctors";
               }else  if(button.id == 'b5'){

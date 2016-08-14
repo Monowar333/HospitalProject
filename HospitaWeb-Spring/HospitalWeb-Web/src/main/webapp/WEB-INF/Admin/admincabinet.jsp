@@ -18,13 +18,28 @@
     <h3> 
         Личный кабинет администратора
     </h3>
-    <body>
+     <body>
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.0.0.js"></script>
-        <script type="text/javascript" src = "JS/script_3.js"></script>
-            <form id = "Action" action="" method="POST">
-                <input type="button" id ="b3" value="Добавить специализации" onclick = "btn1(this.id)">
-                <input type="button" id ="b4" value="Добавить сотрудника" onclick = "btn1(this.id)">
-                <input type="button" id ="b5" value="Logout" onclick = "btn1(this.id)">
+        <script> 
+            function btn1(idb){
+               var button = document.getElementById(idb);
+                var act = document.getElementById("Action");
+
+              if(button.id == 'b3'){
+                act.action =  "/adddoctors";
+              } else  if(button.id == 'b4'){
+                  act.action =  "adddoctors";
+              }else  if(button.id == 'b5'){
+                  act.action =  "/Hospital_new/LogoutServlet";
+              }
+                   act.submit();              
+            }
+        </script>
+
+        <form id = "Action" action="" method="POST">
+            <input type="submit" id ="b3" value="Добавить специализации" onclick = "btn1(this.id)">
+                <input type="submit" id ="b4" value="Добавить сотрудника" onclick = "btn1(this.id)">
+<!--                <input type="button" id ="b5" value="Logout" onclick = "btn1(this.id)">-->
             </form>
         
 

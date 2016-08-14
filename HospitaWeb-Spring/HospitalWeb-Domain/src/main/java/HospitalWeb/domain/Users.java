@@ -6,6 +6,7 @@
 package HospitalWeb.domain;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -25,6 +26,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  *
@@ -44,7 +47,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Users.findByEmail", query = "SELECT u FROM Users u WHERE u.email = :email"),
     @NamedQuery(name = "Users.findByTelephone", query = "SELECT u FROM Users u WHERE u.telephone = :telephone"),
     @NamedQuery(name = "Users.findByStatus", query = "SELECT u FROM Users u WHERE u.status = :status")})
-public class Users implements Serializable {
+public class Users implements Serializable, UserDetails, GrantedAuthority{
 
     @Size(max = 50)
     @Column(name = "auntification")
@@ -189,9 +192,9 @@ public class Users implements Serializable {
         this.login = login;
     }
 
-    public String getPassword() {
-        return password;
-    }
+//    public String getPassword() {
+//        return password;
+//    }
 
     public void setPassword(String password) {
         this.password = password;
@@ -305,6 +308,53 @@ public class Users implements Serializable {
         return "DB.entity.Users[ id=" + id + " ]";
     }
 
+     @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Arrays.asList(new GrantedAuthority[]{this});
+    }
+
+    @Override
+    public String getPassword() {
+        return this.password;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.login;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return statusWork;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+         return statusregistr;
+    }
+
+    public String getRolename() {
+        return status;
+    }
+
+    public void setRolename(String status) {
+        this.status = status;
+    }
+
+    @Override
+    public String getAuthority() {
+        return status;
+    }
     
     
     
