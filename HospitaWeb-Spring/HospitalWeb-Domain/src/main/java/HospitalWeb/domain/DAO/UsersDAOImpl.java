@@ -33,7 +33,7 @@ public class UsersDAOImpl implements UserDAO{
         session.close();
         return u;
     }
-    
+      @Override
     public List<Users> getBySpec(Spcialialization idspecialization) {
         Session session = HibernateUtil.getSessionFactory().openSession();      
         Criteria crit = session.createCriteria(Users.class)
@@ -42,7 +42,7 @@ public class UsersDAOImpl implements UserDAO{
         session.close();
         return uList;   
     }
-    
+      @Override
     public Users getByLogin(String login) {
         Session session = HibernateUtil.getSessionFactory().openSession();      
         Criteria crit = session.createCriteria(Users.class)
@@ -51,7 +51,16 @@ public class UsersDAOImpl implements UserDAO{
         session.close();
         return us;   
     }
-    
+      @Override
+    public Users getByEmail(String email) {
+        Session session = HibernateUtil.getSessionFactory().openSession();      
+        Criteria crit = session.createCriteria(Users.class)
+                .add(Restrictions.eq("email", email));
+        Users us = (Users)crit.uniqueResult();
+        session.close();
+        return us;   
+    }
+      @Override
         public Users getByAuntification(String login) {
         Session session = HibernateUtil.getSessionFactory().openSession();      
         Criteria crit = session.createCriteria(Users.class)
@@ -60,6 +69,7 @@ public class UsersDAOImpl implements UserDAO{
         session.close();
         return us;   
     }
+          @Override
      public Users getByLinckAccept(String link) {
         Session session = HibernateUtil.getSessionFactory().openSession();      
         Criteria crit = session.createCriteria(Users.class)
@@ -68,7 +78,7 @@ public class UsersDAOImpl implements UserDAO{
         session.close();
         return u; 
     }
-    
+      @Override
     public List<Users> getBySpecAndStWork(Spcialialization idspecialization) {
         Session session = HibernateUtil.getSessionFactory().openSession();      
         Criteria crit = session.createCriteria(Users.class);
@@ -98,6 +108,7 @@ public class UsersDAOImpl implements UserDAO{
         }
         return result;   
     }
+    
 
     @Override
     public void update(Users o) {

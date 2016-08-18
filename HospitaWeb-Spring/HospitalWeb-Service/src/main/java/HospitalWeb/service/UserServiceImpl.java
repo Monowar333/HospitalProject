@@ -7,13 +7,12 @@ package HospitalWeb.service;
 
 
 import HospitalWeb.domain.DAO.UserDAO;
-import HospitalWeb.domain.DAO.UsersDAOImpl;
 import HospitalWeb.domain.Spcialialization;
 import HospitalWeb.domain.Users;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
+
 
 /**
  *
@@ -97,7 +96,29 @@ public class UserServiceImpl implements UserService{
         }
         return u;
     }
-
+    
+    @Override
+    public Users getByEmail(String mail) {
+         Users u = null;
+        try{
+            u = usersDao.getByEmail(mail);
+            if(u == null){
+                throw new ODEException("such user is not exist");
+            }
+        }catch(ODEException ex){
+            System.out.println("write log - user does not exist");
+            throw ex;
+        }catch(HibernateException ex){
+            System.out.println("hibernate exception occured");
+            throw ex;
+        }catch(Exception ex){
+            System.out.println((ex.getClass()).getName()+ " exception occured");
+            throw ex;
+        }
+        return u;
+    }
+    
+    
     @Override
     public Users getByAuntification(String auntification) {
          Users u = null;
@@ -166,10 +187,11 @@ public class UserServiceImpl implements UserService{
         Integer i  = null;
         Users u = o;
         try{
-            
+             if(u == null){
+                throw new ODEException("such user is not exist");
+            }
             i = usersDao.save(u);
-            System.out.println(i + "fsdfsfdfs");
-            if(i == null){
+            if(i == null || i == 0){
                 throw new ODEException("invalid save");
             }
         }catch(ODEException ex){
@@ -193,8 +215,8 @@ public class UserServiceImpl implements UserService{
              if(u == null){
                 throw new ODEException("such user is not exist");
             }
-            usersDao.update(o);
-           
+            usersDao.update(u);
+            System.out.println("UUUUUUUUUUfsdfsfdfs");
         }catch(ODEException ex){
             System.out.println("write log - user does not exist");
             throw ex;

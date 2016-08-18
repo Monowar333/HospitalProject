@@ -57,28 +57,22 @@
                         <form  id ="Login" action="" method="POST">
                         <li>
                             <a>
-                                <%--<c:if test="${info eq 'false'}">--%>
-                                    <!--<div class="container" style="width: 300px;">-->
+
                                       <sec:authorize access="!isAuthenticated()">
-                                           <!--<input type ="submit"  id ="b1"  onclick = "btn(this.id)" value="input">-->
+
                                             <span>Username: <input type="text" class="form-control" name="j_username" placeholder="Email address" required autofocus value=""></span>                                      
                                             <span>Password: <input type="password" class="form-control" name="j_password" placeholder="Password" required value=""></span>
                                             <span><input type="submit" id ="b1" value="ВОЙТИ" onclick = "btn(this.id)"></span>
                                       </sec:authorize>
-                                            <!--</form>-->
-                                    <!--</div>-->
-<!--                                            <span>Username: <input type="text" name="user"></span>                                      
-                                            <span>Password: <input type="password" name="pass"></span>
-                                            <span><input type="submit" id ="b1" value="ВОЙТИ" ></span>-->
-                                <%--</c:if>--%> 
-                                 <sec:authorize access="isAuthenticated()">
+
+                                      <sec:authorize access="isAuthenticated()">
                                             <span>Ваш логин: <sec:authentication property="principal.username" /></span>
-                                            <span><a href="${adress123}?param=${item.id}">Личный кабинет</a></span>
+                                            <span><a href="admin/admincabinet">Личный кабинет</a></span>
                                              <span><input type="submit" id ="b2" value="ВЫЙТИ" onclick = "btn(this.id)"></span> 
                                       </sec:authorize>
                                        
                                            
-                            
+                            </a>
 
 			</li>
                         </form>

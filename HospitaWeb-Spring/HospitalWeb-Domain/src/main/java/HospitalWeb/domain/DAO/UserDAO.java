@@ -18,6 +18,7 @@ public interface UserDAO {
     public Users getById(int id);
     public List<Users> getBySpec(Spcialialization idspecialization);
     public Users getByLogin(String login);
+    public Users getByEmail(String email);
     public Users getByAuntification(String login);
     public Users getByLinckAccept(String link);
     public List<Users> getBySpecAndStWork(Spcialialization idspecialization);

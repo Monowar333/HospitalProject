@@ -1,4 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%--<%@ page session="false"%>--%>
 <%-- 
     Document   : AddDoctors
     Created on : 06.01.2016, 8:46:33
@@ -21,7 +23,9 @@
         input {
             margin: 3px 0px 3px 30px;
         }
-
+        
+        span.error {
+	color: red;
         
     </style>
             <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
@@ -29,116 +33,83 @@
         <script type="text/javascript" src = "https://code.jquery.com/jquery-3.0.0.js"></script>
         <script type="text/javascript" src = "/js/jsmy.js"></script>
     </head>
-    <body>
-         
- 
-        <form id="loginform" action="saveuser" method="POST">
-            <ul >
-                <c:forEach var="item" items="${error}">
-                    <li>${item}</li>                
-                </c:forEach>
-            </ul>
-        <table border="1">
-            <thead>
-                <tr>
-                    
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Имя</td>
-                  
-                    <td>
-                        <input type="text" name="firstname" value="${firstname}" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>Фамилия</td>
-                    <td>
-                        <input type="text" name="LastName" value="${LastName}" />
-                     
-                    </td>
-                </tr>
-                <tr>
-                    <td>Стаж</td>
-                    <td>
-                         <input type="text" id="Exp" name="Exp" value="${Exp}" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>Отделение</td>
-                    <td>
-                        <select name="Sprcia" >
-                            <c:forEach var="item" items="${Specialalization}">
-                                <option value="${item.id}">${item.name}</option>
-                            </c:forEach>
-<!--                            <option>Гастроэнтерология</option>
-                                <option>Гинекология</option>
-                            <option>Дерматология</option>
-                            <option>Кардиология</option>
-                            <option>ЛОР</option>
-                            <option>Неврология</option>
-                            <option>Стоматология</option>-->
-                        </select>
-                      
-                    </td>
-                </tr>
-                <tr>
-                    <td>Группа пользователей</td>
-                  
-                    <td>
-                        <select name="Group" >
-                           
-                            <option>doctors</option>
-                           <option>registry</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Логин</td>
-                    <td>
-                         <input type="text" id="NickName" name="Login" value="${NickName}" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>Пароль</td>
-                    <td>
-                        <input type="password" id="Pasw" name="Pasw" value="${Pasw}" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>Повторите пароль</td>
-                    <td>
-                         <input type="text" id="Pasw2" name="Pasw2" value="${Pasw2}" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>Фото</td>
-                    <td>
-                         <input type="text" id ="Foto" name="Foto" value="${Foto}" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>Телефон</td>         
-                    <td>
-                         <input type="text" id="Telephon" name="Telephon" value="${Telephon}" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>е-mail</td>
-                    <td>
-                         <input type="text" id="Email" name="Email" value="${Email}" />
-                    </td>
-                </tr>
-        
-            </tbody>
-        </table>
+        <body>
+            sdfdcvcbvbc 
+            <form:form method="post" action="saveuser" commandName="users">
+                    <table>
+                            <tr>
+                                    <td>Имя:</td>
+                                    <td><form:input path="name" /></td>
+                                    <td><span class="error" ><form:errors path="name" /></span></td>
+                            </tr>
+                            <tr>
+                                    <td>Фамилия:</td>
+                                    <td><form:input path="snme" /></td>
+                                    <td><span class="error"><form:errors path="snme" /></span></td>
+                            </tr>
+                            <tr>
+                                    <td>Стаж:</td>
+                                    <td><form:input path="exp" /></td>
+                                    <td><span class="error"><form:errors path="exp" /></span></td>
+                            </tr>
+                            <tr>
+                                     <td>Отделение:</td>
+                                     <td>
+                                        <select <form:input path="idspecializationInt"/> >
+                                            <c:forEach var="item" items="${Specialalization}">
+                                                <option value="${item.id}">${item.name}</option>
+                                            </c:forEach>
+                                        </select>
+                                     </td>
+                            </tr>
+                                    <tr>
+                                    <td>Группа пользователей:</td>
+                                    <td>
+                                        <select <form:input path="status"/> >
+                                            <option>doctors</option>
+                                           <option>registry</option>
+                                        </select>
+                                    </td>
+                                    </tr>
+                            <tr>
+                                    <td>Логин:</td>
+                                    <td><form:input path="login" /></td>
+                                    <td><span class="error"><form:errors path="login" /></span></td>
+                            </tr>
+                            <tr>
+                                    <td>Пароль:</td>
+                                    <td><form:password path="password" /></td>
+                                    <td><span class="error"><form:errors path="password" /></span></td>
+                            </tr>
+
+                            <tr>
+                                    <td>Повторите пароль:</td>
+                                    <td><form:password path="confirmPassword" /></td>
+                                    <td><span class="error"><form:errors path="confirmPassword" /></span></td>
+                            </tr>
+
+                            <!--<tr>-->
+                                    <!--<td>Фото:</td>-->
+                                    <!--<td></td>-->
+                                    <!--<td><span class="error"></span></td>-->
+                            <!--</tr>-->
+                            <tr>
+                                    <td>Телефон:</td>
+                                    <td><form:input path="telephone" /></td>
+                                    <td><span class="error"><form:errors path="telephone" /></span></td>
+                            </tr>
+                            <tr>
+                                    <td>Email:</td>
+                                    <td><form:input path="email" /></td>
+                                    <td><span class="error"><form:errors path="email" /></span></td>
+                            </tr>
+                            <tr>
+                                    <td colspan="3"><input type="submit" value="Добавить" /></td>
+                            </tr>
+                    </table>
+            </form:form>
+
     
-            <div class="send">
-             <input type="submit"  value="Добавить">
-             </div>
-        </form>
-    
-    </body>
+        </body>
 </html>
 

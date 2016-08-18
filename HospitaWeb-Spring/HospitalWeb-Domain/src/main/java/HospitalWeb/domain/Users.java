@@ -49,7 +49,16 @@ import org.springframework.security.core.userdetails.UserDetails;
     @NamedQuery(name = "Users.findByStatus", query = "SELECT u FROM Users u WHERE u.status = :status")})
 public class Users implements Serializable, UserDetails, GrantedAuthority{
 
-    @Size(max = 50)
+   
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
+    
+     @Size(max = 50)
     @Column(name = "auntification")
     private String auntification;
 
@@ -63,13 +72,8 @@ public class Users implements Serializable, UserDetails, GrantedAuthority{
 
     @Column(name = "status_work")
     private Boolean statusWork;
-
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-    private Integer id;
+    
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -151,7 +155,13 @@ public class Users implements Serializable, UserDetails, GrantedAuthority{
     
     
     
+  
 
+    public boolean isStatusregistr() {
+        return statusregistr;
+    }
+
+   
     public Integer getId() {
         return id;
     }
@@ -176,11 +186,11 @@ public class Users implements Serializable, UserDetails, GrantedAuthority{
         this.snme = snme;
     }
 
-    public int getExp() {
+    public Integer getExp() {
         return exp;
     }
 
-    public void setExp(int exp) {
+    public void setExp(Integer exp) {
         this.exp = exp;
     }
 
@@ -248,71 +258,6 @@ public class Users implements Serializable, UserDetails, GrantedAuthority{
         return statusregistr;
     }
 
-    
-    @XmlTransient
-    public Collection<DutyDays> getDutyDaysCollection() {
-        return dutyDaysCollection;
-    }
-
-    public void setDutyDaysCollection(Collection<DutyDays> dutyDaysCollection) {
-        this.dutyDaysCollection = dutyDaysCollection;
-    }
-    
-    public String getAuntification() {
-        return auntification;
-    }
-
-    public void setAuntification(String auntification) {
-        this.auntification = auntification;
-    }
-
-    @XmlTransient
-    public Collection<Reception> getReceptionCollection() {
-        return receptionCollection;
-    }
-
-    public void setReceptionCollection(Collection<Reception> receptionCollection) {
-        this.receptionCollection = receptionCollection;
-    }
-
-    public Spcialialization getIdspecialization() {
-        return idspecialization;
-    }
-
-    public void setIdspecialization(Spcialialization idspecialization) {
-        this.idspecialization = idspecialization;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Users)) {
-            return false;
-        }
-        Users other = (Users) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "DB.entity.Users[ id=" + id + " ]";
-    }
-
-     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.asList(new GrantedAuthority[]{this});
-    }
-
     @Override
     public String getPassword() {
         return this.password;
@@ -355,6 +300,75 @@ public class Users implements Serializable, UserDetails, GrantedAuthority{
     public String getAuthority() {
         return status;
     }
+    
+    public void setReceptionCollection(Collection<Reception> receptionCollection) {
+        this.receptionCollection = receptionCollection;
+    }
+
+    public Spcialialization getIdspecialization() {
+        return idspecialization;
+    }
+
+    public void setIdspecialization(Spcialialization idspecialization) {
+        this.idspecialization = idspecialization;
+    }
+    
+    @XmlTransient
+    public Collection<DutyDays> getDutyDaysCollection() {
+        return dutyDaysCollection;
+    }
+
+    public void setDutyDaysCollection(Collection<DutyDays> dutyDaysCollection) {
+        this.dutyDaysCollection = dutyDaysCollection;
+    }
+    
+    public String getAuntification() {
+        return auntification;
+    }
+
+    public void setAuntification(String auntification) {
+        this.auntification = auntification;
+    }
+
+    @XmlTransient
+    public Collection<Reception> getReceptionCollection() {
+        return receptionCollection;
+    }
+
+    
+ 
+    
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Users)) {
+            return false;
+        }
+        Users other = (Users) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "DB.entity.Users[ id=" + id + " ]";
+    }
+
+     @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Arrays.asList(new GrantedAuthority[]{this});
+    }
+
+   
     
     
     

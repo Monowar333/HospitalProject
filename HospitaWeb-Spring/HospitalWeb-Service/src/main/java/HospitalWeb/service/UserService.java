@@ -17,6 +17,7 @@ import java.util.List;
 public interface UserService {
     public Users getById(int id);
     public List<Users> getBySpec(Spcialialization idspecialization);
+     public Users getByEmail(String mail);
     public Users getByLogin(String login); 
     public Users getByAuntification(String auntification); 
     public Users getByLinckAccept(String link);  

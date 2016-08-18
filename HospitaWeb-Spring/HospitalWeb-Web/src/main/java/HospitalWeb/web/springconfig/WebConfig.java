@@ -33,7 +33,7 @@ import org.springframework.web.servlet.view.JstlView;
                                 "HospitalWeb.service",
                                 "HospitalWeb.service.config",
                                 "HospitalWeb.web",
-                               
+                                "HospitalWeb.Validate.*",
                                 "HospitalWeb.controller.*",
                                 "HospitalWeb.web.springconfig"
         
@@ -55,5 +55,14 @@ import org.springframework.web.servlet.view.JstlView;
         @Bean(name = "userDetailsService")
         public UserDetailsService userDetailsService(){
             return new AuthenticationManager();
+        }
+        
+         @Bean(name = "usersValidate")
+        public UsersValidate usersValidate(){
+            return new UsersValidate();
+        }
+         @Bean(name = "userVAlidateUpdate")
+        public UserVAlidateUpdate userVAlidateUpdate(){
+            return new UserVAlidateUpdate();
         }
     }

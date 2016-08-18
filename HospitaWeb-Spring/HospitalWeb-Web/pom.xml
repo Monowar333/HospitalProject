@@ -27,6 +27,24 @@
             <type>jar</type>
         </dependency>
         <dependency>
+            <groupId>com.so</groupId>
+            <artifactId>MailSample</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>uits.jv1503</groupId>
+            <artifactId>HospitalWeb-Mail</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>uits.jv1503</groupId>
+            <artifactId>HospitalWeb-Domain</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>7.0</version>
@@ -71,7 +89,11 @@
             <artifactId>spring-security-taglibs</artifactId>
             <version>3.2.4.RELEASE</version>
         </dependency>
-
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>1.4.0</version>
+        </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>

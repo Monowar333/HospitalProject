@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="4" failures="0" name="HospitalWeb.domain.DAO.SpecialalizationDAOTest" time="0.371" errors="0" skipped="0">
+<testsuite tests="4" failures="0" name="HospitalWeb.domain.DAO.SpecialalizationDAOTest" time="0.187" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files (x86)\Java\jdk1.8.0_51\jre\bin"/>
@@ -61,8 +61,8 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="pentium_pro+mmx pentium_pro pentium+mmx pentium i486 i386 i86"/>
   </properties>
-  <testcase classname="HospitalWeb.domain.DAO.SpecialalizationDAOTest" name="testSave" time="0.07"/>
-  <testcase classname="HospitalWeb.domain.DAO.SpecialalizationDAOTest" name="testGetById" time="0.001"/>
-  <testcase classname="HospitalWeb.domain.DAO.SpecialalizationDAOTest" name="testGetList" time="0.003"/>
-  <testcase classname="HospitalWeb.domain.DAO.SpecialalizationDAOTest" name="testUpdate" time="0.068"/>
+  <testcase classname="HospitalWeb.domain.DAO.SpecialalizationDAOTest" name="testSave" time="0"/>
+  <testcase classname="HospitalWeb.domain.DAO.SpecialalizationDAOTest" name="testGetById" time="0"/>
+  <testcase classname="HospitalWeb.domain.DAO.SpecialalizationDAOTest" name="testGetList" time="0"/>
+  <testcase classname="HospitalWeb.domain.DAO.SpecialalizationDAOTest" name="testUpdate" time="0.047"/>
 </testsuite>

@@ -56,7 +56,7 @@ public class CardServiceImpl implements CardService{
        Integer i  = null;
         Card u = o;
         try{
-            cardDAO.save(o);
+            i = cardDAO.save(o);
             if(i == null){
                 throw new ODEException("invalid save");
             }

@@ -5,20 +5,24 @@
  */
 package HospitalWeb.controller.Admin;
 
-import HospitalWeb.domain.Spcialialization;
+import HospitalWeb.Validate.UsersValidateDate;
 import HospitalWeb.domain.Users;
 import HospitalWeb.service.SpecialalizationService;
 import HospitalWeb.service.UserService;
+import HospitalWeb.web.springconfig.UserVAlidateUpdate;
+import HospitalWeb.web.springconfig.UsersValidate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.encoding.PlaintextPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 /**
  *
  * @author Жека
@@ -27,9 +31,19 @@ import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 public class AdminControllerUsers {
     @Autowired
      SpecialalizationService specService;
+
      
      @Autowired
      UserService userService;
+     
+     @Autowired
+     UsersValidate usersvalidate;
+     
+     @Autowired
+     UserVAlidateUpdate usersupdatevalidate;
+     
+     //    @Autowired
+//     SendMail sendMail;
      
      @RequestMapping(value = {"**/admin/admincabinet"}, method = {RequestMethod.GET})
     public ModelAndView getUsersList(){
@@ -48,91 +62,90 @@ public class AdminControllerUsers {
             Users user = userService.getById(id);
             model.addObject("Specialalization",specService.getList());
             model.setViewName("Admin/edituser");
-            model.addObject("user", user);
+            model.addObject("usersupdate", user);
             return model;
         }
         
           @RequestMapping(value = {"/admin/userdelete/{id}"}, method = {RequestMethod.GET})
            public String deleteUsers(
                 @PathVariable("id")int id){
-               
                System.out.println("HospitalWeb.controller.Admin.AdminControllerUsers.deleteUsers()" + id);
              if (!(("admin").equals(userService.getById(id).getStatus()))){
                  userService.changeStatus(id);
              }
-//            model.addObject("Specialalization",specService.getList());
-//            model.setViewName("Admin/edituser");
-//            model.addObject("user", user);
              return "redirect:/admin/admincabinet";
         }
 
-        @RequestMapping(value = {"/admin/useredit/saveuser/{id}"}, method = {RequestMethod.POST})
+        @RequestMapping(value = {"/admin/useredit/updatruser/**"}, method = {RequestMethod.POST})
        public String updateUser(
-               @PathVariable("id")int id,
-               @RequestParam("firstname") String firstname,
-               @RequestParam("LastName") String lastname,
-               @RequestParam("Exp") Integer exp,
-               @RequestParam("Foto") String foto,
-               @RequestParam("Sprcia") Integer sprcia,
-               @RequestParam("Telephon") String telephon,
-               @RequestParam("Email") String email,
-               @RequestParam("Group") String Group) {
-           ModelAndView mv = new ModelAndView();
-           Users user = new Users();
-            user.setName(firstname);    
-            user.setSnme(lastname);
-            user.setStatus(Group);
-            user.setExp(exp);
-            user.setIdspecialization(specService.getById(sprcia));          
-            user.setEmail(email);
-            user.setTelephone(telephon);
+               @RequestParam("id")int id,
+               @RequestParam("idspecialization1")int idspecialization,
+               Model model, @ModelAttribute("usersupdate") Users users, 
+               BindingResult result
+              ) {
+                usersupdatevalidate.validate(users, result);
+                    if(result.hasErrors()){
+                         usersvalidate.getClass();
+                        model.addAttribute("Specialalization",specService.getList());
+                         model.addAttribute("users",users);
+                         System.out.println(result.getAllErrors());
+                       return "Admin/edituser";
+                     }
+                System.out.println(users.getId());
+                System.out.println(users.getName());
+                System.out.println(users.getSnme());
+                  
+           Users user = userService.getById(id);
+            user.setName(users.getName());    
+            user.setSnme(users.getSnme());
+            user.setStatus(users.getStatus());
+            user.setExp(users.getExp());
+            user.setIdspecialization(specService.getById(idspecialization));          
+            user.setEmail(users.getEmail());
+            user.setTelephone(users.getTelephone());
             user.setStatusWork(true);  
             userService.update(user);
-   //        usersService.updateUser(user);
-   //        mv.setViewName("user/edituser");
-   //        mv.addObject("user", user);
            return "redirect:/admin/admincabinet";
         }
         
-       @RequestMapping(value = {"/admin/adddoctors"}, method = {RequestMethod.POST})
+       @RequestMapping(value = {"/admin/adddoctors"}, method = {RequestMethod.POST, RequestMethod.GET})
            public ModelAndView goToAddUsers(){
                 ModelAndView model = new ModelAndView();
                 model.addObject("Specialalization",specService.getList());
+                model.addObject("users",new UsersValidateDate());
             model.setViewName("Admin/adddoctors");
              return model;
         }
            
             @RequestMapping(value = {"/admin/saveuser"}, method = {RequestMethod.POST})
-       public String saveUser(
-               @RequestParam("firstname") String firstname,
-               @RequestParam("LastName") String lastname,
-               @RequestParam("Exp") Integer exp,
-               @RequestParam("Foto") String foto,
-               @RequestParam("Sprcia") Integer sprcia,
-               @RequestParam("Telephon") String telephon,
-               @RequestParam("Email") String email,
-               @RequestParam("Login") String login,
-               @RequestParam("Pasw") String pasw,
-               @RequestParam("Group") String Group) {
-           ModelAndView mv = new ModelAndView();
-           Users user = new Users();
-            user.setName(firstname);    
-            user.setSnme(lastname);
-            user.setStatus(Group);
-            user.setExp(exp);
-            user.setIdspecialization(specService.getById(sprcia));          
-            user.setEmail(email);
-            user.setTelephone(telephon);
-            user.setLogin(login);
-            user.setPassword(new ShaPasswordEncoder().encodePassword("admin", null));
-            System.out.println(user.getPassword());
-            user.setStatusWork(true);  
-            user.setStatusregistr(false);
-            userService.save(user);
-             
-   //        usersService.updateUser(user);
-   //        mv.setViewName("user/edituser");
-   //        mv.addObject("user", user);
+       public String saveUser(Model model, @ModelAttribute("users") UsersValidateDate users, BindingResult result){
+               usersvalidate.validate(users, result);
+               if(result.hasErrors()){
+                    usersvalidate.getClass();
+                   model.addAttribute("Specialalization",specService.getList());
+                    model.addAttribute("users",users);
+                  return "Admin/adddoctors";
+                }
+              Users user1 = new Users();
+              String registrlink =users.getLogin() + 
+                    new ShaPasswordEncoder().encodePassword(String.valueOf(System.currentTimeMillis()), null);
+              String link = "<a href=\"http://localhost:8087/Hospital_new/AcceptRegistr?param="
+                    + registrlink + "\">" + registrlink + "</a>";
+                System.out.println( user1.getId());
+            user1.setName(users.getName());    
+            user1.setSnme(users.getSnme());
+            user1.setExp(users.getExp());
+            user1.setIdspecialization(specService.getById(users.getIdspecializationInt()));
+            user1.setStatus(users.getStatus());
+            user1.setLogin(users.getLogin());
+            user1.setPassword(new ShaPasswordEncoder().encodePassword(users.getPassword(), null));
+            user1.setEmail(users.getEmail());
+            user1.setTelephone(users.getTelephone());
+            user1.setLinkaccept(registrlink);
+            user1.setStatusWork(true); 
+            user1.setStatusregistr(false);              
+             //new SendMail().sendMail(email, firstname,link); 
+            //отправка письма на подтверждение регистрации 
            return "redirect:/admin/admincabinet";
         }
 }
