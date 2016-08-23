@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService{
         Users u = null;
         try{
             u = usersDao.getById(id);
-            if(u == null){
+            if(null == u){
                 throw new ODEException("such user is not exist");
             }
         }catch(ODEException ex){
@@ -191,7 +191,7 @@ public class UserServiceImpl implements UserService{
                 throw new ODEException("such user is not exist");
             }
             i = usersDao.save(u);
-            if(i == null || i == 0){
+            if( 0 == i){
                 throw new ODEException("invalid save");
             }
         }catch(ODEException ex){
@@ -212,7 +212,7 @@ public class UserServiceImpl implements UserService{
         
         Users u = o;
         try{
-             if(u == null){
+             if(null == u){
                 throw new ODEException("such user is not exist");
             }
             usersDao.update(u);
@@ -234,7 +234,7 @@ public class UserServiceImpl implements UserService{
     public void remove(Users o) {
         Users u = o;
         try{
-             if(u == null){
+             if(null == u){
                 throw new ODEException("such user is not exist");
             }
             usersDao.remove(o);
@@ -257,7 +257,7 @@ public class UserServiceImpl implements UserService{
         try{
             u = usersDao.getList();
             System.out.println(u.get(0));
-            if(u == null){
+            if(null == u){
                 throw new ODEException("such user is not exist");
             }
         }catch(ODEException ex){

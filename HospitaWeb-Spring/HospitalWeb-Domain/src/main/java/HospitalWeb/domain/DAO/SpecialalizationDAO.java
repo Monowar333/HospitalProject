@@ -14,6 +14,7 @@ import java.util.List;
  */
 public interface SpecialalizationDAO {
     public Spcialialization getById(int id);
+    public Spcialialization getByName(String name);
     public int save(Spcialialization o);
     public void update(Spcialialization o);
     public void remove(Spcialialization o);

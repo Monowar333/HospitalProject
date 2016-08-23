@@ -26,11 +26,9 @@
                 var act = document.getElementById("Action");
 
               if(button.id == 'b3'){
-                act.action =  "/adddoctors";
+                act.action =  "specialization";
               } else  if(button.id == 'b4'){
                   act.action =  "adddoctors";
-              }else  if(button.id == 'b5'){
-                  act.action =  "/Hospital_new/LogoutServlet";
               }
                    act.submit();              
             }

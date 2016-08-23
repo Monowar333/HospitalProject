@@ -7,12 +7,11 @@ package HospitalWeb.web.springconfig;
 
 
 
+import HospitalWeb.Validate.ValidateRegular;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-
-
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -29,13 +28,17 @@ import org.springframework.web.servlet.view.JstlView;
                                 "HospitalWeb.domain",
                                 "HospitalWeb.domain.DAO",
                                 "HospitalWeb.domain.config",
+                                "HospitalWeb.mail",
                                 "HospitalWeb.mail.config",
                                 "HospitalWeb.service",
                                 "HospitalWeb.service.config",
+                                "HospitalWeb.workwithxml",
+                                "HospitalWeb.workwithxml.config",
                                 "HospitalWeb.web",
                                 "HospitalWeb.Validate.*",
                                 "HospitalWeb.controller.*",
                                 "HospitalWeb.web.springconfig"
+                                
         
     })
     @Import({ AppSecurityConfig.class })
@@ -64,5 +67,13 @@ import org.springframework.web.servlet.view.JstlView;
          @Bean(name = "userVAlidateUpdate")
         public UserVAlidateUpdate userVAlidateUpdate(){
             return new UserVAlidateUpdate();
+        }
+          @Bean(name = "specializationValidate")
+        public SpecializationValidate specializationValidate(){
+            return new SpecializationValidate();
+        }
+        @Bean(name = "validateRegular")
+        public ValidateRegular validateRegular(){
+            return new ValidateRegular();
         }
     }

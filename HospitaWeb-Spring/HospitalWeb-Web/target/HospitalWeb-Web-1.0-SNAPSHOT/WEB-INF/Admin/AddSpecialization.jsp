@@ -1,5 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <%@page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -7,19 +7,35 @@
     <head>
         <%@include file="/WEB-INF/AllUsers/Menu.jspf"%>
         <title>JSP Page</title>
-        <script type="text/javascript" src="https://code.jquery.com/jquery-3.0.0.js"></script>
-        <script type="text/javascript" src = "JS/script_3_1.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+        <script>
+            function removeUser(id){
+                if(confirm("remove this user?")){
+                console.log('id = ' + id);
+                var url = 'deletespecalization/'+id;
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    data: {id:id},
+                    success: function(data,status){
+                        //remove user from table
+                        $('#usr_'+id).remove();
+                    },
+                    error:function(data,status){
+                        $('#usr_'+id).remove();
+                        //alert
+                    }
+                  });
+              }
+                  return false;
+            }
+        </script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>
-             <ul>
-                <c:forEach var="item" items="${error}">
-                    <li>${item}</li>                
-                </c:forEach>
-            </ul>
-        <form id="Login1" action="" method="POST">
-             <c:if test="${addoredit eq 'true'}">
-                  
+<!--        <form id="Login1" action="" method="POST">-->
+            
+                    <form:form method="post" action="addspec" commandName="specialization"  id= "spec">
                         <table>
                             <tbody>
                                 <tr>
@@ -27,39 +43,24 @@
                                 </tr>
                                 <tr>
                                     <td>Нaзвание специализации</td>
-                                    <td>
-                                        <input type="text" name="spename1"  value="" />
-                                    </td>
+                                    <td><form:input path="name" /></td>
+                                    <td><span class="error"><form:errors path="name" /></span></td>
                                 </tr>
                             </tbody>
                         </table>
-                        <input type="button" id ="b1" value="Добавить новую специальность" onclick = "btn1(this.id)">
                        
+                         <c:if test="${addoredit eq 'true'}">
+                          <input type="button" id ="b1" value="Добавить новую специальность" onclick = "btn1(this.id)">
+                         </c:if>
+                           <c:if test="${addoredit eq 'false'}">
+                               <form:input type = "hidden" path="id" />
+                           <input type="button" id ="b2" value="Сохранить изменения" onclick = "btn1(this.id)">
+                           </c:if>
+                    </form:form>
                         
                 
-             </c:if>
-                <c:if test="${addoredit eq 'false'}">
-
-                           <table>
-                               <tbody>
-                                   <tr>
-                                       Редактировать специализацию
-                                       <input type ="hidden" name = "id1" value="${specchange.id}">
-                                   </tr>
-                                   <tr>
-                                       <td>Нaзвание специализации</td>
-
-                                       <td>
-                                           <input type="text" name="spename"  value="${specchange.name}" />
-                                       </td>
-                                   </tr>
-                               </tbody>
-                           </table>
-                                <input type="button" id ="b2" value="Сохранить изменения" onclick = "btn1(this.id)">
-
-
-                    </c:if>
-        </form>
+                           
+        <!--</form>-->
          
          
                 <table border="1">
@@ -75,8 +76,8 @@
                     
                     <tbody>
                        
-                        <c:forEach var="item" items="${specialization}">
-                        <tr class="table-data" id="${item.id}">
+                        <c:forEach var="item" items="${Specialalization}">
+                        <tr class="table-data" id="usr_${item.id}">
                           
                            
                            <td >
@@ -87,10 +88,10 @@
                           </td>
 
                           <td >
-                         <a href="EditSpecialization?param=${item.id}">Изменить</a>
+                         <a href="editspec/${item.id}">Изменить</a>
                           </td>
                            <td>
-                         <a href="DeleteSpecalization?param=${item.id}" onclick="return deleteUserById(${item.id})">Удалить</a>
+                         <a href="deletespecalization/${item.id}" onclick="return removeUser(${item.id})">Удалить</a>
                           </td>
                           
                       </tr>
@@ -106,9 +107,9 @@
    <script>
             function btn1(idb){
                 var button = document.getElementById(idb);
-                var act = document.getElementById("Login1");
+                var act = document.getElementById("spec");
                
-               act.action = (button.id == 'b1') ? "DeleteSpecalization" : "EditSpecialization";
+               act.action = (button.id == 'b1') ? "addspec" : "saveedit";
                    act.submit();       
             }
             </script>

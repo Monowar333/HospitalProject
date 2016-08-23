@@ -26,6 +26,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 /**
  *
  * @author Жека
+ * It is controller used for Admin - role 
+ * Realizetion next functions
+ *  add user + validate + send email to accept registr
+ *  update user + validate
+ *  delete user(change status work)
+ *  show all users 
+ * 
+ * 
  */
 @Controller
 public class AdminControllerUsers {

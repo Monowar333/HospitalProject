@@ -28,6 +28,17 @@ public class SpecialalizationDAOImpl implements SpecialalizationDAO {
         session.close();
         return u;
     }
+    
+    @Override
+    public Spcialialization getByName(String name) {
+         Session session = HibernateUtil.getSessionFactory().openSession();
+               
+        Criteria crit = session.createCriteria(Spcialialization.class)
+                .add(Restrictions.eq("name", name));
+        Spcialialization u = (Spcialialization)crit.uniqueResult();
+        session.close();
+        return u;
+    }
 
     @Override
     public int save(Spcialialization o) {
@@ -64,11 +75,11 @@ public class SpecialalizationDAOImpl implements SpecialalizationDAO {
 
     @Override
     public void remove(Spcialialization o) {
-        if(o.getId() != 42){
+        if(!"Default".equals(o.getName())){
         UsersDAOImpl us = new UsersDAOImpl();
         List<Users> usspec = us.getBySpec(o);
         for(Users user: usspec){
-            user.setIdspecialization(new SpecialalizationDAOImpl().getById(42));
+            user.setIdspecialization(new SpecialalizationDAOImpl().getByName("Default"));
             us.update(user);
         }
         Session session = HibernateUtil.getSessionFactory().openSession();

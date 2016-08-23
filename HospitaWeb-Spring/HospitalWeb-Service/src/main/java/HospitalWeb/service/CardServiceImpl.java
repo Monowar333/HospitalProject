@@ -21,10 +21,7 @@ public class CardServiceImpl implements CardService{
      @Autowired
     private CardsDAOImpl cardDAO;
     
-//    @Required
-//    public void setCardDao(CardsDAOImpl cardDAO) {
-//        this.cardDAO = cardDAO;
-//    }
+
 
     public CardServiceImpl() {
 //        this.cardDAO = new CardsDAOImpl();
@@ -35,7 +32,7 @@ public class CardServiceImpl implements CardService{
        Card u = null;
         try{
             u = cardDAO.getById(id);
-            if(u == null){
+            if(null == u){
                 throw new ODEException("such user is not exist");
             }
         }catch(ODEException ex){
@@ -57,7 +54,7 @@ public class CardServiceImpl implements CardService{
         Card u = o;
         try{
             i = cardDAO.save(o);
-            if(i == null){
+            if(0 == i){
                 throw new ODEException("invalid save");
             }
         }catch(ODEException ex){
@@ -77,7 +74,7 @@ public class CardServiceImpl implements CardService{
     public void update(Card o) {
         Card u = o;
         try{
-             if(u == null){
+             if(null == u){
                 throw new ODEException("such user is not exist");
             }
             cardDAO.update(o);
@@ -98,7 +95,7 @@ public class CardServiceImpl implements CardService{
     public void remove(Card o) {
        Card u = o;
         try{
-             if(u == null){
+             if(null == u){
                 throw new ODEException("such user is not exist");
             }
             cardDAO.remove(o);
@@ -121,7 +118,7 @@ public class CardServiceImpl implements CardService{
         try{
             u = cardDAO.getList();
             System.out.println(u.get(0));
-            if(u == null){
+            if(null == u){
                 throw new ODEException("such user is not exist");
             }
         }catch(ODEException ex){

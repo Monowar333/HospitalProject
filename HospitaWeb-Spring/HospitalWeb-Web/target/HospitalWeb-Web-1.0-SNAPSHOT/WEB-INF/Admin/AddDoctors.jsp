@@ -34,7 +34,6 @@
         <script type="text/javascript" src = "/js/jsmy.js"></script>
     </head>
         <body>
-            sdfdcvcbvbc 
             <form:form method="post" action="saveuser" commandName="users">
                     <table>
                             <tr>

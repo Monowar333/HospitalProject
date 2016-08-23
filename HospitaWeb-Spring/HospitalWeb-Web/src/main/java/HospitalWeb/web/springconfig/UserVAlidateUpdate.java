@@ -5,6 +5,8 @@
  */
 package HospitalWeb.web.springconfig;
 
+import HospitalWeb.Validate.ValidatePattern;
+import HospitalWeb.Validate.ValidateRegular;
 import HospitalWeb.domain.Users;
 import HospitalWeb.service.UserService;
 import java.util.regex.Matcher;
@@ -20,14 +22,21 @@ import org.springframework.validation.Validator;
  * @author Жека
  */
 public class UserVAlidateUpdate implements Validator{
-      private Pattern patern;
-        private Matcher matcher;
-        private final String name = "^[А-ЯA-Z][а-яa-z]+$";
-        private final String login_pass = "^[a-zA-Z0-9]{2,15}+$";
-        private final String telephone = "^((0|\\+3)[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{10,13}$";
-        
-           @Autowired
+         @Autowired
         UserService userService;
+         
+         @Autowired
+         ValidateRegular regular;
+         
+         
+         
+         
+         private final String name = ValidatePattern.name.pattern();
+        private final String login_pass = ValidatePattern.login_pass.pattern();
+        private final String telephone = ValidatePattern.telephone.pattern();
+
+        
+          
             
         @Override
 	public boolean supports(Class<?> clazz) {
@@ -40,23 +49,24 @@ public class UserVAlidateUpdate implements Validator{
 		Users usersupdate = (Users) target;
 		
 	
-		
+		System.out.println("telephone " + telephone);
+                System.out.println("telephone " + usersupdate.getTelephone());
                 ValidationUtils.rejectIfEmptyOrWhitespace(errors, "telephone", "telephone.empty", "telephone must not be empty.");
-		if(regular(usersupdate.getTelephone(), telephone) == false){
+		if(false == regular.regular(usersupdate.getTelephone(), telephone)){
                     errors.rejectValue("telephone", "telephone.falsform", "telephone address is not valid.");
                 }
                 
                 ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "name.empty", "Firstname must not be empty.");
-		if(regular(usersupdate.getName(), name) == false){
+		if(false == regular.regular(usersupdate.getName(), name)){
                     errors.rejectValue("name", "name.falsform", "Firstname  must have only A-Z,a-z,А-Я,а-я.");
                 }
                  ValidationUtils.rejectIfEmptyOrWhitespace(errors, "snme", "snme.empty", "Lastname must not be empty.");
-		if(regular(usersupdate.getSnme(), name) == false){
+		if(false == regular.regular(usersupdate.getSnme(), name)){
                     errors.rejectValue("snme", "snme.falsform", "Lastname  must have only A-Z,a-z,А-Я,а-я.");
                 }
                 
                  ValidationUtils.rejectIfEmptyOrWhitespace(errors, "exp", "exp.empty", "Lastname must not be empty.");
-		if(usersupdate.getExp() <= 0){
+		if(0 >= usersupdate.getExp()){
                     errors.rejectValue("exp", "exp.falsform", "Experions  must have only number more 0.");
                 }
                 
@@ -70,9 +80,5 @@ public class UserVAlidateUpdate implements Validator{
                 }
 	}
         
-        public  boolean regular(String s, String pattern){
-        patern = Pattern.compile(pattern);//компилирование регулярного віражения
-        matcher = patern.matcher(s);//анализирует строку и ищет соответсвие шалону
-        return matcher.matches();//результат сравнение true/false
-    }
+     
 }

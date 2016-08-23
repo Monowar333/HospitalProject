@@ -6,6 +6,8 @@
 package HospitalWeb.web.springconfig;
 import HospitalWeb.Validate.UsersValidateDate;
 import HospitalWeb.Validate.UsersValidateDate;
+import HospitalWeb.Validate.ValidatePattern;
+import HospitalWeb.Validate.ValidateRegular;
 import HospitalWeb.domain.Users;
 import HospitalWeb.service.UserService;
 import java.util.regex.Matcher;
@@ -25,13 +27,13 @@ import org.springframework.validation.Validator;
  */
  @Component
 public class UsersValidate implements Validator {
-    
-        private Pattern patern;
-        private Matcher matcher;
-        private final String name = "^[А-ЯA-Z][а-яa-z]+$";
-        private final String login_pass = "^[a-zA-Z0-9]{2,15}+$";
-        private final String telephone = "^((0|\\+3)[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{10,13}$";
+       @Autowired
+         ValidateRegular regular;
         
+        private final String name = ValidatePattern.name.pattern();
+        private final String login_pass = ValidatePattern.login_pass.pattern();
+        private final String telephone = ValidatePattern.telephone.pattern();
+
         @Autowired
         UserService userService;
             
@@ -48,11 +50,11 @@ public class UsersValidate implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "login", "login.empty", "login must not be empty.");
 		String login = users.getLogin();
                 try{
-		if ((login.length()) > 16) {
+		if (16 < (login.length())) {
                     errors.rejectValue("login", "login.tooLong", "login must not more than 16 characters.");
-		}else if(regular(login, login_pass) == false){
+		}else if(false == regular.regular(login, login_pass)){
                     errors.rejectValue("login", "login.falsform", "login must have only A-Z,a-z,0-9.");
-                }else if(userService.getByLogin(login) != null){
+                }else if(null != userService.getByLogin(login)){
                     errors.rejectValue("login", "login.falsform", "login alredy using");
                 }
                 }catch (Exception ex){
@@ -63,33 +65,34 @@ public class UsersValidate implements Validator {
 		if (!(users.getPassword()).equals(users
 				.getConfirmPassword())) {
 			errors.rejectValue("confirmPassword", "confirmPassword.passwordDontMatch", "Passwords don't match.");
-		}else if(regular(users.getPassword(), login_pass) == false){
+		}else if(false == regular.regular(users.getPassword(), login_pass)){
                     errors.rejectValue("password", "password.falsform", "password must have only A-Z,a-z,0-9.");
                 }
 		
                 ValidationUtils.rejectIfEmptyOrWhitespace(errors, "telephone", "telephone.empty", "telephone must not be empty.");
-		if(regular(users.getTelephone(), telephone) == false){
-                    errors.rejectValue("telephone", "telephone.falsform", "telephone address is not valid.");
+		if(false == regular.regular(users.getTelephone(), telephone)){
+                    errors.rejectValue("telephone", "telephone.falsform", "telephone must not be empty.");
+		
                 }
                 
                 ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "name.empty", "Firstname must not be empty.");
-		if(regular(users.getName(), name) == false){
+		if(false == regular.regular(users.getName(), name)){
                     errors.rejectValue("name", "name.falsform", "Firstname  must have only A-Z,a-z,А-Я,а-я.");
                 }
                  ValidationUtils.rejectIfEmptyOrWhitespace(errors, "snme", "snme.empty", "Lastname must not be empty.");
-		if(regular(users.getSnme(), name) == false){
+		if(false == regular.regular(users.getSnme(), name)){
                     errors.rejectValue("snme", "snme.falsform", "Lastname  must have only A-Z,a-z,А-Я,а-я.");
                 }
                 
                  ValidationUtils.rejectIfEmptyOrWhitespace(errors, "exp", "exp.empty", "Lastname must not be empty.");
-		if(users.getExp() <= 0){
+		if(0 >= users.getExp()){
                     errors.rejectValue("exp", "exp.falsform", "Experions  must have only number more 0.");
                 }
                 
                 try{
 		if( !EmailValidator.getInstance().isValid( users.getEmail() ) ){
 			errors.rejectValue("email", "email.notValid", "Email address is not valid.");
-		}else if(userService.getByEmail(users.getEmail()) != null){
+		}else if(null != userService.getByEmail(users.getEmail())){
                     errors.rejectValue("email", "email.falsform", "email alredy using");
                 }
                 }catch (Exception ex){
@@ -97,10 +100,7 @@ public class UsersValidate implements Validator {
                 }
 	}
         
-        public  boolean regular(String s, String pattern){
-        patern = Pattern.compile(pattern);//компилирование регулярного віражения
-        matcher = patern.matcher(s);//анализирует строку и ищет соответсвие шалону
-        return matcher.matches();//результат сравнение true/false
-    }
+      
+    
 }
 
