@@ -11,7 +11,7 @@ import HospitalWeb.domain.Spcialialization;
 import HospitalWeb.domain.Users;
 import HospitalWeb.service.SpecialalizationService;
 import HospitalWeb.service.UserService;
-import java.io.IOException;
+import HospitalWeb.workwithxml.FromXMLtoDB;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,6 +37,9 @@ public class AllUsersController {
      @Autowired
      WorkWithXML workWithXML;
      
+      @Autowired
+     FromXMLtoDB FromXMLtoDB;
+     
       @RequestMapping(value = {"/","/StartPage"}, method = {RequestMethod.GET, RequestMethod.POST})
       public ModelAndView index(){
         ModelAndView model = new ModelAndView();
@@ -48,12 +51,6 @@ public class AllUsersController {
         @ResponseBody
         public ModelAndView getDoctorsList(
                 @PathVariable("id")int id){
-            //DOM create = new WorkWithXMLDOM();
-            try{
-            workWithXML.creatXML();
-            }catch ( IOException ex){
-                System.out.println("HospitalWeb.controller.AllUsers.AllUsersController.getDoctorsList()");
-            }
             ModelAndView model = new ModelAndView();
             Spcialialization spec = specService.getById(id);
             List<Users> userspec = userService.getBySpec(spec);

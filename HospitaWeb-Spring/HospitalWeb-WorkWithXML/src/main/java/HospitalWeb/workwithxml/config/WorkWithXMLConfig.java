@@ -1,6 +1,8 @@
 
 package HospitalWeb.workwithxml.config;
 
+import HospitalWeb.workwithxml.FromXMLtlDBDOM;
+import HospitalWeb.workwithxml.FromXMLtoDB;
 import HospitalWeb.workwithxml.WorkWithXML;
 import HospitalWeb.workwithxml.WorkWithXMLDOM;
 import org.springframework.context.annotation.Bean;
@@ -27,7 +29,10 @@ public class WorkWithXMLConfig{
         return new WorkWithXMLDOM();
     }
     
-    
-    
+   
+     @Bean
+    public  FromXMLtoDB getFromXMLtoDB(){
+        return new  FromXMLtlDBDOM();
+    }
     
 }

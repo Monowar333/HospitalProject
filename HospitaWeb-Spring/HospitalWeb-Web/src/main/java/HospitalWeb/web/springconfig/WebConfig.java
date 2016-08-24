@@ -76,4 +76,9 @@ import org.springframework.web.servlet.view.JstlView;
         public ValidateRegular validateRegular(){
             return new ValidateRegular();
         }
+        
+        @Bean(name = "startHospitalWeb")
+        public StartHospitalWeb startHospitalWeb(){
+            return new StartHospitalWeb();
+        }
     }
