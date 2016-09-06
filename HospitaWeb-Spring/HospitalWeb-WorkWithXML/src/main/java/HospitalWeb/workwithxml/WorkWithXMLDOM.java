@@ -79,8 +79,10 @@ public class WorkWithXMLDOM implements WorkWithXML{
    
             doc.getRootElement().addContent(userElement);
          }
-          String filen =  "src" + File.separator + "test" + File.separator + "java" + File.separator + "resources" + File.separator + "iblog.xml";
-               File file = new File(filen);
+         //String filen =  "src" + File.separator + "test" + File.separator + "java" + File.separator + "resources" + File.separator + "users.xml";
+          //String filen = "classpath:" + File.separator + "resourse" + File.separator + "users.xml";
+          String filen = CredentialsBundle.resolveCredentials("file");
+          File file = new File(filen);
                 System.out.println(file.getAbsolutePath());
             file.createNewFile();
             System.out.println(file.getAbsolutePath());

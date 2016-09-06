@@ -32,7 +32,8 @@ public class StartHospitalWeb implements InitializingBean, DisposableBean  {
     public void afterPropertiesSet() throws Exception {
         System.out.println("Start App");
           try{
-            FromXMLtoDB.FromXMLtlDBDOM();
+          //  FromXMLtoDB.FromXMLtlDBDOM();
+            workWithXML.creatXML();
             }catch ( IOException ex){
                 System.out.println("HospitalWeb.controller.AllUsers.AllUsersController.getDoctorsList()");
             }
