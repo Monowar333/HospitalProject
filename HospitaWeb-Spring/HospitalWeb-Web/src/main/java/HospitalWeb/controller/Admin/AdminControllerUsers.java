@@ -77,7 +77,6 @@ public class AdminControllerUsers {
           @RequestMapping(value = {"/admin/userdelete/{id}"}, method = {RequestMethod.GET})
            public String deleteUsers(
                 @PathVariable("id")int id){
-               System.out.println("HospitalWeb.controller.Admin.AdminControllerUsers.deleteUsers()" + id);
              if (!(("admin").equals(userService.getById(id).getStatus()))){
                  userService.changeStatus(id);
              }
@@ -99,9 +98,7 @@ public class AdminControllerUsers {
                          System.out.println(result.getAllErrors());
                        return "Admin/edituser";
                      }
-                System.out.println(users.getId());
-                System.out.println(users.getName());
-                System.out.println(users.getSnme());
+
                   
            Users user = userService.getById(id);
             user.setName(users.getName());    

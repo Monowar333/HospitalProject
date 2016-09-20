@@ -71,7 +71,7 @@ public class Card implements Serializable {
     @Column(name = "Telephone")
     private String telephone;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Недопустимый адрес электронной почты")//if the field contains email address consider using this annotation to enforce field validation
-    @Size(max = 25)
+    @Size(max = 35)
     @Column(name = "email")
     private String email;
 

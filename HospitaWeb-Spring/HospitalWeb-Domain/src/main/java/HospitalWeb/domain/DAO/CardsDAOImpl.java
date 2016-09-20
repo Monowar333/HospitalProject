@@ -15,7 +15,17 @@ import org.hibernate.criterion.Restrictions;
 
 
 public class CardsDAOImpl implements CardsDAO {
-
+    
+    
+    @Override
+    public Card getByEmail(String email) {
+        Session session = HibernateUtil.getSessionFactory().openSession();      
+        Criteria crit = session.createCriteria(Card.class)
+                .add(Restrictions.eq("email", email));
+        Card us = (Card)crit.uniqueResult();
+        session.close();
+        return us;   
+    }
     @Override
     public Card getById(int id) {
         Session session = HibernateUtil.getSessionFactory().openSession();

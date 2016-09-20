@@ -31,8 +31,9 @@ public class FromXMLtlDBDOM implements FromXMLtoDB{
      
     @Override
      public void FromXMLtlDBDOM(){
-        String file = "src" + File.separator + "test" + File.separator + "java" + File.separator + "resources" + File.separator + "iblog.xml";
-        File xmlFile = new File(file);
+       // String file = "src" + File.separator + "test" + File.separator + "java" + File.separator + "resources" + File.separator + "iblog.xml";
+       String filen = CredentialsBundle.resolveCredentials("file"); 
+       File xmlFile = new File(filen);
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder;
         try {

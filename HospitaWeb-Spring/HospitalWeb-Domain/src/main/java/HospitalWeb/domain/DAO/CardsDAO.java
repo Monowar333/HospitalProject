@@ -19,4 +19,5 @@ public interface CardsDAO {
     public void remove(Card o);
     public List<Card> getList();
     public void changeStatus(int id);
+    public Card getByEmail(String email);
 }

@@ -71,6 +71,10 @@ import org.springframework.web.servlet.view.JstlView;
         public UsersValidate usersValidate(){
             return new UsersValidate();
         }
+         @Bean(name = "cardValidate")
+        public CardValidate cardValidate(){
+            return new CardValidate();
+        }
          @Bean(name = "userVAlidateUpdate")
         public UserVAlidateUpdate userVAlidateUpdate(){
             return new UserVAlidateUpdate();

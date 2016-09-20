@@ -24,14 +24,7 @@ public class UserServiceImpl implements UserService{
     private UserDAO usersDao;
 
 //инекция компонента бин     
-//    @Required
-//    public void setUsersDao(UserDAO usersDao) {
-//        this.usersDao = usersDao;
-//    }
 
-    public UserServiceImpl() {
-//        this.usersDao = new UsersDAOImpl();
-    }
     
     @Override
     public Users getById(int id) {

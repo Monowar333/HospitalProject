@@ -3,7 +3,8 @@
     Created on : 23.07.2016, 18:10:52
     Author     : Жека
 --%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -24,92 +25,80 @@
        <title>JSP Page</title>
     </head>
     <body>
-        <input type ="hidden" name = "id" value="${user.id}">
-        <form id="loginform" action="AddCard" method="POST">
-            <ul>
-                <c:forEach var="item" items="${error}">
-                    <li>${item}</li>                
-                </c:forEach>
-            </ul>
-         <table border="1">
-          <thead>
-                <tr>
+
                     
-                </tr>
-            </thead>
-            <tbody>
-                  <tr>
-                    <td>Номеp карты</td>
-                    <td>
-                         <input type="text" name="number" value="<c:out value="${number}"/>" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>Дата регистрации</td>
-                    <td>
-                         <input type="text" name="dateRegistr" value="<c:out value="${dateRegistr}"/>" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>Имя</td>
-                    <td>
-                        <input type="text" name="name" value="${name}" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>Фамилия</td>
-                    <td>
-                        <input type="text" name="sname" value="${sname}" />
+           <form:form method="post" action="savecard" commandName="card">
+                    <table>
+                            <tr>
+                                    <td>Имя:</td>
+                                    <td><form:input path="name" /></td>
+                                    <td><span class="error" ><form:errors path="name" /></span></td>
+                            </tr>
+                            <tr>
+                                    <td>Фамилия:</td>
+                                    <td><form:input path="sname" /></td>
+                                    <td><span class="error"><form:errors path="sname" /></span></td>
+                            </tr>
+
+                              <tr>
+                                    <td>Номер карты:</td>
+                                  <td><input type="text" name="number" value = "${number.getNumbercard()}" /><td>
                      
-                    </td>
-                </tr>
-              
-                <tr>
-                    <td>Дата рождения</td>
-                    <td>
-                    <select name="day" >
-                    <c:forEach var="item" items="${date.getDay()}">
-                    <option><c:out value="${item}"/></option>
-                    </c:forEach>
-                    </select>
-                    <select name="month" >
-                    <c:forEach var="item" items="${date.getMonth()}">
-                     <option><c:out value="${item}"/></option>
-                     </c:forEach>
-                    </select>
-                   <select name="year" >
-                    <c:forEach var="item" items="${date.getYear()}">
-                    <option> <c:out value="${item}"/></option>
-                     </c:forEach>
-                    </select>
-                      
-                    </td>
-                </tr>
-               
-                <tr>
-                    <td>Адресс</td>         
-                    <td>
-                         <input type="text" id="address" name="address" value="${address}" />
-                    </td>
-                </tr>
- 
-                <tr>
-                    <td>Телефон</td>         
-                    <td>
-                         <input type="text" id="telephone" name="telephone" value="${telephone}" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>е-mail</td>
-                    <td>
-                         <input type="text" id="email" name="email" value="${email}" />
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-            <div class="send">
-             <input type="submit"  value="Добавить">
-             </div>
-        </form>
+                              </tr>
+                         
+                              <tr>
+                                  <td>Дата регистрации:</td>
+                                  <td><input type="text" name="dateRegistr1" value="${number.getDateregistr()}" /><td>
+                     
+                              </tr>
+                            
+                             
+                            <tr>
+                                <td>Дата рождения</td>
+                                <td>
+                                <select name="day" >
+                                <c:forEach var="item" items="${date.getDay()}">
+                                <option><c:out value="${item}"/></option>
+                                </c:forEach>
+                                </select>
+                                <select name="month" >
+                                <c:forEach var="item" items="${date.getMonth()}">
+                                 <option><c:out value="${item}"/></option>
+                                 </c:forEach>
+                                </select>
+                               <select name="year" >
+                                <c:forEach var="item" items="${date.getYear()}">
+                                <option> <c:out value="${item}"/></option>
+                                 </c:forEach>
+                                </select>
+
+                                </td>
+                            </tr>
+
+                            <!--<tr>-->
+                                    <!--<td>Фото:</td>-->
+                                    <!--<td></td>-->
+                                    <!--<td><span class="error"></span></td>-->
+                            <!--</tr>-->
+                            <tr>
+                                    <td>Телефон:</td>
+                                    <td><form:input path="telephone" /></td>
+                                    <td><span class="error"><form:errors path="telephone" /></span></td>
+                            </tr>
+                             <tr>
+                                    <td>Адресс:</td>
+                                    <td><form:input path="address" /></td>
+                                    <td><span class="error"><form:errors path="address" /></span></td>
+                            </tr>
+                            <tr>
+                                    <td>Email:</td>
+                                    <td><form:input path="email" /></td>
+                                    <td><span class="error"><form:errors path="email" /></span></td>
+                            </tr>
+                            <tr>
+                                    <td colspan="3"><input type="submit" value="Добавить" /></td>
+                            </tr>
+                    </table>
+            </form:form>            
     </body>
 </html>

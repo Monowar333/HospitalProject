@@ -19,7 +19,7 @@
         <h3> 
         Личный кабинет регистратуры
         </h3>
-         <a href="AddCard">Добавить новую карту</a>
+         <a href="addcard">Добавить новую карту</a>
         <table border="1">
                     <thead>
                         <tr>
@@ -75,10 +75,10 @@
                            <c:out value="${item.status}"/> 
                           </td>
                           <td style="background-color:${myName}; color:#ffffff">
-                              <a href="EditCard?param=${item.id}">Изменить</a>
+                              <a href="cardupdate/${item.id}">Изменить</a>
                           </td>
                            <td>
-                             <a href="DeleteCard?param=${item.id}">Удалить</a>
+                             <a href="carddelete/${item.id}">Удалить</a>
                           </td>
                           
                       </tr>

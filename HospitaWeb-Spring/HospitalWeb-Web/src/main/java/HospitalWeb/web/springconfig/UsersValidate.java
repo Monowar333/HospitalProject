@@ -71,7 +71,7 @@ public class UsersValidate implements Validator {
 		
                 ValidationUtils.rejectIfEmptyOrWhitespace(errors, "telephone", "telephone.empty", "telephone must not be empty.");
 		if(false == regular.regular(users.getTelephone(), telephone)){
-                    errors.rejectValue("telephone", "telephone.falsform", "telephone must not be empty.");
+                    errors.rejectValue("telephone", "telephone.falsform", "Telephone  address is not valid.");
 		
                 }
                 

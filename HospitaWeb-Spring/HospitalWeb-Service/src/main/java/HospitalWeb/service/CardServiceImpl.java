@@ -7,6 +7,7 @@ package HospitalWeb.service;
 
 
 import HospitalWeb.domain.Card;
+import HospitalWeb.domain.DAO.CardsDAO;
 import HospitalWeb.domain.DAO.CardsDAOImpl;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -19,12 +20,28 @@ import org.springframework.beans.factory.annotation.Required;
  */
 public class CardServiceImpl implements CardService{
      @Autowired
-    private CardsDAOImpl cardDAO;
+    private CardsDAO cardDAO;
     
 
-
-    public CardServiceImpl() {
-//        this.cardDAO = new CardsDAOImpl();
+     @Override
+    public Card getByEmail(String mail) {
+         Card u = null;
+        try{
+            u = cardDAO.getByEmail(mail);
+            if(u == null){
+                throw new ODEException("such user is not exist");
+            }
+        }catch(ODEException ex){
+            System.out.println("write log - user does not exist");
+            throw ex;
+        }catch(HibernateException ex){
+            System.out.println("hibernate exception occured");
+            throw ex;
+        }catch(Exception ex){
+            System.out.println((ex.getClass()).getName()+ " exception occured");
+            throw ex;
+        }
+        return u;
     }
 
     @Override
@@ -136,7 +153,23 @@ public class CardServiceImpl implements CardService{
 
     @Override
     public void changeStatus(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Integer i = id;
+        try{
+             if(i == null){
+                throw new ODEException("such user is not exist");
+            }
+            cardDAO.changeStatus(i);
+           
+        }catch(ODEException ex){
+            System.out.println("write log - user does not exist");
+            throw ex;
+        }catch(HibernateException ex){
+            System.out.println("hibernate exception occured");
+            throw ex;
+        }catch(Exception ex){
+            System.out.println((ex.getClass()).getName()+ " exception occured");
+            throw ex;
+        }
     }
     
 }

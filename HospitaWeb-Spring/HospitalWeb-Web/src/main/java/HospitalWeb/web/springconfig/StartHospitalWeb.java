@@ -31,12 +31,12 @@ public class StartHospitalWeb implements InitializingBean, DisposableBean  {
     @Override
     public void afterPropertiesSet() throws Exception {
         System.out.println("Start App");
-          try{
-          //  FromXMLtoDB.FromXMLtlDBDOM();
-            workWithXML.creatXML();
-            }catch ( IOException ex){
-                System.out.println("HospitalWeb.controller.AllUsers.AllUsersController.getDoctorsList()");
-            }
+//          try{
+//          // FromXMLtoDB.FromXMLtlDBDOM();
+////            workWithXML.creatXML();
+//            }catch ( IOException ex){
+//                System.out.println("HospitalWeb.controller.AllUsers.AllUsersController.getDoctorsList()");
+//            }
     }
     
     public void destroy(){
