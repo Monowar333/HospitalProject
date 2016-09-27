@@ -10,8 +10,8 @@
         <module>HospitalWeb-Service</module>
         
         <module>HospitalWeb-Mail</module>
-        <module>HospitalWeb-WorkWithXML</module>
         <module>HospitalWeb-Web</module>
+        <module>HospitalWeb-WorkWithFiles</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

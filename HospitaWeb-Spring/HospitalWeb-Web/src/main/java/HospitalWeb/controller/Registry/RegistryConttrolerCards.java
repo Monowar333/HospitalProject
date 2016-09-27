@@ -40,7 +40,7 @@ public class RegistryConttrolerCards {
       @Autowired
       CardValidate cardValidate;
       
-   @RequestMapping(value={"/registry/cards"}, method = {RequestMethod.POST, RequestMethod.GET})
+   @RequestMapping(value={"/registry/registrycabinet"}, method = {RequestMethod.POST, RequestMethod.GET})
     public ModelAndView cardList(){
         ModelAndView model = new ModelAndView();
         model.addObject("cardlist", cardService.getList());
@@ -94,14 +94,14 @@ public class RegistryConttrolerCards {
                 card.setDateofBirthdey(da);
                 card.setStatus(true);
                 cardService.save(card);
-               return "redirect:/registry/cards";
+               return "redirect:/registry/registrycabinet";
         }
           
           @RequestMapping(value = {"/registry/carddelete/{id}"}, method = {RequestMethod.GET})
            public String deleteCard(
                 @PathVariable("id")int id){
             cardService.changeStatus(id);
-            return "redirect:/registry/cards";
+            return "redirect:/registry/registrycabinet";
         }
            
             @RequestMapping(value = {"/registry/cardupdate/{id}"}, method = {RequestMethod.GET})
@@ -151,6 +151,6 @@ public class RegistryConttrolerCards {
                 card.setDateofBirthdey(da);
                 card.setStatus(true);
                 cardService.update(card);
-               return "redirect:/registry/cards";
+               return "redirect:/registry/registrycabinet";
         }
 }

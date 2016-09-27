@@ -34,6 +34,7 @@ import org.springframework.web.servlet.view.JstlView;
                                 "HospitalWeb.service",
                                 "HospitalWeb.service.config",
                                 "HospitalWeb.workwithxml",
+                                "HospitalWeb.workwithexel",
                                 "HospitalWeb.workwithxml.config",
                                 "HospitalWeb.web",
                                 "HospitalWeb.Validate.*",
@@ -86,6 +87,11 @@ import org.springframework.web.servlet.view.JstlView;
         @Bean(name = "validateRegular")
         public ValidateRegular validateRegular(){
             return new ValidateRegular();
+        }
+        
+         @Bean(name = "ReceptionValidate")
+        public ReceptionValidate receptionValidate(){
+            return new ReceptionValidate();
         }
         
         @Bean(name = "startHospitalWeb")

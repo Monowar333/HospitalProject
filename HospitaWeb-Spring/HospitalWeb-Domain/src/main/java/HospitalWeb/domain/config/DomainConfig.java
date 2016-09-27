@@ -8,6 +8,10 @@ package HospitalWeb.domain.config;
 
 import HospitalWeb.domain.DAO.CardsDAO;
 import HospitalWeb.domain.DAO.CardsDAOImpl;
+import HospitalWeb.domain.DAO.MedicationsDAO;
+import HospitalWeb.domain.DAO.MedicationsDAOImpl;
+import HospitalWeb.domain.DAO.ReceptionDAO;
+import HospitalWeb.domain.DAO.ReceptionDAOImpl;
 import HospitalWeb.domain.DAO.SpecialalizationDAO;
 import HospitalWeb.domain.DAO.SpecialalizationDAOImpl;
 import HospitalWeb.domain.DAO.UserDAO;
@@ -41,6 +45,17 @@ public class DomainConfig {
     public SpecialalizationDAO getSpecialalizationDao(){
         return new SpecialalizationDAOImpl();
     }
+    
+    @Bean
+    public ReceptionDAO getReceptionDAO(){
+        return new ReceptionDAOImpl();
+    }
+    
+    @Bean
+    public MedicationsDAO getMedicationsDAO(){
+        return new MedicationsDAOImpl();
+    }
+    
     
     
 }

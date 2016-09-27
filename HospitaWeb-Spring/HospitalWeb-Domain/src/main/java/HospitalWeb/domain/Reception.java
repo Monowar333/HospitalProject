@@ -7,7 +7,9 @@ package HospitalWeb.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,12 +20,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -36,9 +40,20 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Reception.findAll", query = "SELECT r FROM Reception r"),
     @NamedQuery(name = "Reception.findById", query = "SELECT r FROM Reception r WHERE r.id = :id"),
     @NamedQuery(name = "Reception.findByTime", query = "SELECT r FROM Reception r WHERE r.time = :time"),
-    @NamedQuery(name = "Reception.findByStatus", query = "SELECT r FROM Reception r WHERE r.status = :status"),
-    @NamedQuery(name = "Reception.findByIdDuty", query = "SELECT r FROM Reception r WHERE r.idDuty = :idDuty")})
+    @NamedQuery(name = "Reception.findByStatus", query = "SELECT r FROM Reception r WHERE r.status = :status")})
 public class Reception implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idreception", fetch = FetchType.LAZY)
+    private List<Prescription> prescriptionList;
+
+    @Size(max = 300)
+    @Column(name = "provisionaldiagnosis")
+    private String provisionaldiagnosis;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 5000)
+    @Column(name = "complaints")
+    private String complaints;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -56,10 +71,7 @@ public class Reception implements Serializable {
     @Size(min = 1, max = 8)
     @Column(name = "status")
     private String status;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "id_duty")
-    private int idDuty;
+
     @JoinColumn(name = "id_card", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Card idCard;
@@ -78,7 +90,7 @@ public class Reception implements Serializable {
         this.id = id;
         this.time = time;
         this.status = status;
-        this.idDuty = idDuty;
+        
     }
 
     public Integer getId() {
@@ -105,13 +117,7 @@ public class Reception implements Serializable {
         this.status = status;
     }
 
-    public int getIdDuty() {
-        return idDuty;
-    }
-
-    public void setIdDuty(int idDuty) {
-        this.idDuty = idDuty;
-    }
+   
 
     public Card getIdCard() {
         return idCard;
@@ -152,6 +158,31 @@ public class Reception implements Serializable {
     @Override
     public String toString() {
         return "DB.entity.Reception[ id=" + id + " ]";
+    }
+
+    public String getProvisionaldiagnosis() {
+        return provisionaldiagnosis;
+    }
+
+    public void setProvisionaldiagnosis(String provisionaldiagnosis) {
+        this.provisionaldiagnosis = provisionaldiagnosis;
+    }
+
+    public String getComplaints() {
+        return complaints;
+    }
+
+    public void setComplaints(String complaints) {
+        this.complaints = complaints;
+    }
+
+    @XmlTransient
+    public List<Prescription> getPrescriptionList() {
+        return prescriptionList;
+    }
+
+    public void setPrescriptionList(List<Prescription> prescriptionList) {
+        this.prescriptionList = prescriptionList;
     }
     
 }

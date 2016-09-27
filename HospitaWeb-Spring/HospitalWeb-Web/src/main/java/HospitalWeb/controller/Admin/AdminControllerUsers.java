@@ -151,6 +151,7 @@ public class AdminControllerUsers {
             user1.setStatusregistr(false);              
              //new SendMail().sendMail(email, firstname,link); 
             //отправка письма на подтверждение регистрации 
+            userService.save(user1);
            return "redirect:/admin/admincabinet";
         }
 }

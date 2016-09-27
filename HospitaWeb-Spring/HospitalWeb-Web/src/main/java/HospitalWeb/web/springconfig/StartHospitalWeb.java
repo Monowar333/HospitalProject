@@ -5,6 +5,7 @@
  */
 package HospitalWeb.web.springconfig;
 
+import HospitalWeb.workwithexel.FromExelToDB;
 import HospitalWeb.workwithxml.FromXMLtoDB;
 import HospitalWeb.workwithxml.WorkWithXML;
 import java.io.IOException;
@@ -21,6 +22,9 @@ public class StartHospitalWeb implements InitializingBean, DisposableBean  {
     
     @Autowired
      WorkWithXML workWithXML;
+    
+     @Autowired
+     FromExelToDB fromExelToDB;
      
       @Autowired
      FromXMLtoDB FromXMLtoDB;
@@ -31,8 +35,9 @@ public class StartHospitalWeb implements InitializingBean, DisposableBean  {
     @Override
     public void afterPropertiesSet() throws Exception {
         System.out.println("Start App");
+//         System.out.println(fromExelToDB.parse());
 //          try{
-//          // FromXMLtoDB.FromXMLtlDBDOM();
+////           FromXMLtoDB.FromXMLtlDBDOM();
 ////            workWithXML.creatXML();
 //            }catch ( IOException ex){
 //                System.out.println("HospitalWeb.controller.AllUsers.AllUsersController.getDoctorsList()");

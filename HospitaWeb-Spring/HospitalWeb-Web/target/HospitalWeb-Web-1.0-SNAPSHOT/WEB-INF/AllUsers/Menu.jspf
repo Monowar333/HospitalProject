@@ -67,7 +67,7 @@
 
                                       <sec:authorize access="isAuthenticated()">
                                             <span>Ваш логин: <sec:authentication property="principal.username" /></span>
-                                            <span><a href="admin/admincabinet">Личный кабинет</a></span>
+                                            <span><a href="workcabinet">Личный кабинет</a></span>
                                              <span><input type="submit" id ="b2" value="ВЫЙТИ" onclick = "btn(this.id)"></span> 
                                       </sec:authorize>
                                        

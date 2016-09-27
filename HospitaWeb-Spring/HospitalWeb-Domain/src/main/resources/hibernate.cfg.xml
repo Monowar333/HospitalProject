@@ -14,5 +14,7 @@
     <mapping class="HospitalWeb.domain.Reception"/>
     <mapping class="HospitalWeb.domain.Spcialialization"/>
     <mapping class="HospitalWeb.domain.Card"/>
+    <mapping class="HospitalWeb.domain.Medications"/>
+    <mapping class="HospitalWeb.domain.Prescription"/>
   </session-factory>
 </hibernate-configuration>

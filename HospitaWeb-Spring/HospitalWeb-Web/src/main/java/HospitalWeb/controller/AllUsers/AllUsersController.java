@@ -14,6 +14,8 @@ import HospitalWeb.service.UserService;
 import HospitalWeb.workwithxml.FromXMLtoDB;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -72,5 +74,16 @@ public class AllUsersController {
         return model;
     }
     
-  
+    @RequestMapping(value = {"**/workcabinet"}, method = {RequestMethod.GET})
+    public String goworkcabinet(){
+        Users us = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if("admin".equals(us.getRolename())){
+            return "redirect:/admin/admincabinet";
+        } else if ("registry".equals(us.getRolename())){
+            return "redirect:registry/registrycabinet";
+        } else if ("doctors".equals(us.getRolename())){
+            return "redirect:/doctors/doctorcabinet";
+        }
+        return "redirect:/StartPage";  
+    }
 }

@@ -134,7 +134,6 @@ public class CardServiceImpl implements CardService{
         List<Card> u = null;
         try{
             u = cardDAO.getList();
-            System.out.println(u.get(0));
             if(null == u){
                 throw new ODEException("such user is not exist");
             }

@@ -8,6 +8,10 @@ package HospitalWeb.service.config;
 
 import HospitalWeb.service.CardService;
 import HospitalWeb.service.CardServiceImpl;
+import HospitalWeb.service.MedicationsService;
+import HospitalWeb.service.MedicationsServiceImpl;
+import HospitalWeb.service.ReceptionService;
+import HospitalWeb.service.ReceptionServiceImpl;
 import HospitalWeb.service.SpecialalizationService;
 import HospitalWeb.service.SpecialalizationServiceImpl;
 import HospitalWeb.service.UserService;
@@ -46,4 +50,13 @@ public class ServiceConfig {
         return new SpecialalizationServiceImpl();
     }
     
+      @Bean
+    public ReceptionService getReceptionService(){
+        return new ReceptionServiceImpl();
+    }
+    
+       @Bean
+    public MedicationsService getMedicationsServicee(){
+        return new MedicationsServiceImpl();
+    }
 }
