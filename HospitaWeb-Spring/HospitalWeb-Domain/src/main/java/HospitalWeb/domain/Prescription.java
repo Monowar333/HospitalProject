@@ -6,7 +6,9 @@
 package HospitalWeb.domain;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,10 +19,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -32,8 +35,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Prescription.findAll", query = "SELECT p FROM Prescription p"),
     @NamedQuery(name = "Prescription.findById", query = "SELECT p FROM Prescription p WHERE p.id = :id"),
-    @NamedQuery(name = "Prescription.findByIndicationsforuse", query = "SELECT p FROM Prescription p WHERE p.indicationsforuse = :indicationsforuse")})
+    @NamedQuery(name = "Prescription.findByLinkprescription", query = "SELECT p FROM Prescription p WHERE p.linkprescription = :linkprescription")})
 public class Prescription implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idprescription", fetch = FetchType.LAZY)
+    private List<Prescriptiondeteil> prescriptiondeteilList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,28 +47,18 @@ public class Prescription implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 1000)
-    @Column(name = "indicationsforuse")
-    private String indicationsforuse;
+    @Size(max = 150)
+    @Column(name = "linkprescription")
+    private String linkprescription;
     @JoinColumn(name = "idreception", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Reception idreception;
-    @JoinColumn(name = "idmedicatetion", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Medications idmedicatetion;
 
     public Prescription() {
     }
 
     public Prescription(Integer id) {
         this.id = id;
-    }
-
-    public Prescription(Integer id, String indicationsforuse) {
-        this.id = id;
-        this.indicationsforuse = indicationsforuse;
     }
 
     public Integer getId() {
@@ -73,12 +69,12 @@ public class Prescription implements Serializable {
         this.id = id;
     }
 
-    public String getIndicationsforuse() {
-        return indicationsforuse;
+    public String getLinkprescription() {
+        return linkprescription;
     }
 
-    public void setIndicationsforuse(String indicationsforuse) {
-        this.indicationsforuse = indicationsforuse;
+    public void setLinkprescription(String linkprescription) {
+        this.linkprescription = linkprescription;
     }
 
     public Reception getIdreception() {
@@ -87,14 +83,6 @@ public class Prescription implements Serializable {
 
     public void setIdreception(Reception idreception) {
         this.idreception = idreception;
-    }
-
-    public Medications getIdmedicatetion() {
-        return idmedicatetion;
-    }
-
-    public void setIdmedicatetion(Medications idmedicatetion) {
-        this.idmedicatetion = idmedicatetion;
     }
 
     @Override
@@ -120,6 +108,15 @@ public class Prescription implements Serializable {
     @Override
     public String toString() {
         return "HospitalWeb.domain.Prescription[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public List<Prescriptiondeteil> getPrescriptiondeteilList() {
+        return prescriptiondeteilList;
+    }
+
+    public void setPrescriptiondeteilList(List<Prescriptiondeteil> prescriptiondeteilList) {
+        this.prescriptiondeteilList = prescriptiondeteilList;
     }
     
 }

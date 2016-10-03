@@ -45,8 +45,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Medications.findByProduct", query = "SELECT m FROM Medications m WHERE m.product = :product")})
 public class Medications implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmedicatetion", fetch = FetchType.LAZY)
-    private List<Prescription> prescriptionList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmedication", fetch = FetchType.LAZY)
+    private List<Prescriptiondeteil> prescriptiondeteilList;
+
+  
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -204,13 +206,15 @@ public class Medications implements Serializable {
         return "HospitalWeb.domain.Medications[ id=" + id + " ]";
     }
 
+
+
     @XmlTransient
-    public List<Prescription> getPrescriptionList() {
-        return prescriptionList;
+    public List<Prescriptiondeteil> getPrescriptiondeteilList() {
+        return prescriptiondeteilList;
     }
 
-    public void setPrescriptionList(List<Prescription> prescriptionList) {
-        this.prescriptionList = prescriptionList;
+    public void setPrescriptiondeteilList(List<Prescriptiondeteil> prescriptiondeteilList) {
+        this.prescriptiondeteilList = prescriptiondeteilList;
     }
     
 }

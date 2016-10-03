@@ -12,6 +12,7 @@ import java.io.IOException;
  * @author Жека
  */
 public interface FromExelToDB {
-     public void FromExelToDB()throws IOException;
+     public void FromExelToDBmedications()throws IOException;
+     public void FromExelToDBprovisionaldiagnosis()throws IOException;
      public  String parse();
 }

@@ -31,16 +31,6 @@ public class MedicationsDAOImpl implements MedicationsDAO{
 
     @Override
     public int save(Medications o) {
-           System.out.println(o.getClinicalpharmgroup().length() + " 0");
-            System.out.println(o.getCompositionofactivesubstances().length() + " 1");
-            System.out.println(o.getConditionsofsupply().length() + " 2");
-            System.out.println(o.getCountry().length() + " 3");
-            System.out.println(o.getManufacturer().length() + " 4");
-            System.out.println(o.getManufactureren().length()+ " 5");
-            System.out.println(o.getMnn().length()+ " 6");
-            System.out.println(o.getProduct().length()+ " 7");
-            System.out.println(o.getTradename().length() + " 8");
-            System.out.println("//////////");
         int result;
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = session.getTransaction();

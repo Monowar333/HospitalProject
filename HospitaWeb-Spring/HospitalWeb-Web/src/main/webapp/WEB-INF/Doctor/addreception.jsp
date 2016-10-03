@@ -15,8 +15,20 @@
         <title>newreception</title>
     </head>
     <body>
-                     
-           <form:form method="post" action="savereception" commandName="reception">
+        <script> 
+            function btn1(idb){
+               var button = document.getElementById(idb);
+                var act = document.getElementById("Action");
+
+              if(button.id == 'b3'){
+                act.action =  "savereception";
+              } else  if(button.id == 'b4'){
+                    act.action =  "savereceptionandprescription";
+              }
+                   act.submit();              
+            }
+        </script>         
+        <form:form method="post" id="Action" action="savereception" commandName="reception">
                     <table>
                             <tr>
                                     <td>Ваше Id:</td>
@@ -63,14 +75,20 @@
                                     <td><form:textarea path="complaints" /></td>
                                     <td><span class="error"><form:errors path="complaints" /></span></td>
                             </tr>
-                             <tr>
-                                    <td>Диагнос:</td>
-                                    <td><form:textarea path="provisionaldiagnosis" /></td>
-                                    <td><span class="error"><form:errors path="provisionaldiagnosis" /></span></td>
+                              <tr>
+                                     <td>Диагнос:</td>
+                                     <td>
+                                        <select name = "provisionaldiagnosis">
+                                            <c:forEach var="item" items="${provisionaldiagnosis}">
+                                                <option value="${item.id}">${item.name}</option>
+                                            </c:forEach>
+                                        </select>
+                                     </td>
                             </tr>
                          
                             <tr>
-                                    <td colspan="3"><input type="submit" value="Добавить" /></td>
+                                <td colspan="1"><input type="submit" id ="b3" value="Добавить" onclick="btn1(this.id)"/></td>
+                                     <td colspan="2"><input type="submit" id ="b4" value="Добавить и выписать рецепт" onclick="btn1(this.id)"/></td>
                             </tr>
                     </table>
             </form:form>     

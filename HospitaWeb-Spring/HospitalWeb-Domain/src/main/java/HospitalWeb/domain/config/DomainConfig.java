@@ -10,6 +10,12 @@ import HospitalWeb.domain.DAO.CardsDAO;
 import HospitalWeb.domain.DAO.CardsDAOImpl;
 import HospitalWeb.domain.DAO.MedicationsDAO;
 import HospitalWeb.domain.DAO.MedicationsDAOImpl;
+import HospitalWeb.domain.DAO.PrescriptionDAO;
+import HospitalWeb.domain.DAO.PrescriptionDAOImpl;
+import HospitalWeb.domain.DAO.PrescriptiondeteilDAO;
+import HospitalWeb.domain.DAO.PrescriptiondeteilDAOImpl;
+import HospitalWeb.domain.DAO.ProvisionaldiagnosisDAO;
+import HospitalWeb.domain.DAO.ProvisionaldiagnosisDAOImpl;
 import HospitalWeb.domain.DAO.ReceptionDAO;
 import HospitalWeb.domain.DAO.ReceptionDAOImpl;
 import HospitalWeb.domain.DAO.SpecialalizationDAO;
@@ -40,6 +46,17 @@ public class DomainConfig {
         return new CardsDAOImpl();
     }
     
+    @Bean
+    public PrescriptionDAO getPrescriptionDao(){
+        return new PrescriptionDAOImpl();
+    }
+    
+     
+    @Bean
+    public PrescriptiondeteilDAO getPrescriptiondeteilDAO(){
+        return new PrescriptiondeteilDAOImpl();
+    }
+    
     
     @Bean
     public SpecialalizationDAO getSpecialalizationDao(){
@@ -54,6 +71,11 @@ public class DomainConfig {
     @Bean
     public MedicationsDAO getMedicationsDAO(){
         return new MedicationsDAOImpl();
+    }
+    
+     @Bean
+    public ProvisionaldiagnosisDAO getProvisionaldiagnosisDAO(){
+        return new ProvisionaldiagnosisDAOImpl();
     }
     
     

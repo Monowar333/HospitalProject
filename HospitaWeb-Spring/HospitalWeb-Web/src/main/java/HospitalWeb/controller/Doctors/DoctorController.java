@@ -8,9 +8,16 @@ package HospitalWeb.controller.Doctors;
 import HospitalWeb.HelpClass.Creatnumbercard;
 import HospitalWeb.HelpClass.DateCreate;
 import HospitalWeb.domain.Card;
+import HospitalWeb.domain.Prescription;
+import HospitalWeb.domain.Prescriptiondeteil;
+import HospitalWeb.domain.Provisionaldiagnosis;
 import HospitalWeb.domain.Reception;
 import HospitalWeb.domain.Users;
 import HospitalWeb.service.CardService;
+import HospitalWeb.service.MedicationsService;
+import HospitalWeb.service.PrescriptionService;
+import HospitalWeb.service.PrescriptiondeteilService;
+import HospitalWeb.service.ProvisionaldiagnosisService;
 import HospitalWeb.service.ReceptionService;
 import HospitalWeb.service.SpecialalizationService;
 import HospitalWeb.service.UserService;
@@ -28,6 +35,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -52,6 +60,18 @@ public class DoctorController {
      @Autowired
      ReceptionValidate receptionValidate;
      
+     @Autowired
+     PrescriptionService prescriptionService;
+     
+     @Autowired
+     ProvisionaldiagnosisService provisionaldiagnosisService;
+     
+     @Autowired
+     MedicationsService medicationsService;
+     
+     @Autowired
+     PrescriptiondeteilService prescriptiondeteilService;
+     
      //    @Autowired
 //     SendMail sendMail;
      
@@ -75,16 +95,52 @@ public class DoctorController {
         List<Users> uList = userService.getList();
         model.addObject("Specialalization",specService.getList());
         model.addObject("date",new Creatnumbercard());
+        model.addObject("provisionaldiagnosis",provisionaldiagnosisService.getList());
         model.setViewName("Doctor/addreception");
         model.addObject("reception", reception);
         model.addObject("idcard1", cardService.getList());
         return model;
     }
     
+    @RequestMapping(value = {"**/doctors/savereceptionandprescription"}, method = {RequestMethod.POST})
+    public String saveReceptionandprescription(
+                  Model model, 
+                  @ModelAttribute("idUsers1") Integer idUsers,
+                  @ModelAttribute("provisionaldiagnosis") Integer idprovisionaldiagnosis,
+                  @ModelAttribute("idcard1") Integer idcard,
+                  @ModelAttribute("time1") String time,
+                  @ModelAttribute("reception") Reception reception,
+                   BindingResult result
+        ){
+        Users us = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        reception.setIdUsers(us);
+         receptionValidate.validate(reception, result);
+               if(result.hasErrors()){
+                    model.addAttribute("Specialalization",specService.getList());
+                    model.addAttribute("date",new Creatnumbercard());
+                    model.addAttribute("provisionaldiagnosis",provisionaldiagnosisService.getList());
+                    model.addAttribute("reception", reception);
+                    model.addAttribute("idcard1", cardService.getList());
+                  return "Doctor/addreception";
+                }
+        Integer i = savereception(idUsers, idprovisionaldiagnosis, idcard, time, reception);
+        System.out.println(i + "///////////////");
+        Prescription pre = new Prescription();
+        pre.setIdreception(receptionService.getById(i));
+        Integer j = prescriptionService.save(pre);
+        model.addAttribute("Specialalization",specService.getList());
+        model.addAttribute("user",us);
+        model.addAttribute("prescriptionid",j);
+        model.addAttribute("medications",medicationsService.getList());
+        return "Doctor/addprescription";
+    }
+    
+    
     @RequestMapping(value = {"**/doctors/savereception"}, method = {RequestMethod.POST})
     public String saveReception(
                   Model model, 
                   @ModelAttribute("idUsers1") Integer idUsers,
+                  @ModelAttribute("provisionaldiagnosis") Integer idprovisionaldiagnosis,
                   @ModelAttribute("idcard1") Integer idcard,
                   @ModelAttribute("time1") String time,
                   @ModelAttribute("reception") Reception reception,
@@ -97,17 +153,45 @@ public class DoctorController {
                    System.out.println(result.getAllErrors());
                     model.addAttribute("Specialalization",specService.getList());
                     model.addAttribute("date",new Creatnumbercard());
+                    model.addAttribute("provisionaldiagnosis",provisionaldiagnosisService.getList());
                     model.addAttribute("reception", reception);
                     model.addAttribute("idcard1", cardService.getList());
                   return "Doctor/addreception";
                 }
+        savereception(idUsers, idprovisionaldiagnosis, idcard, time, reception);
+        return "redirect:/doctors/doctorcabinet";
+    }
+    
+    
+    @RequestMapping(value = {"**/doctors/addmedication"}, method = {RequestMethod.POST})
+    @ResponseBody
+    public void addmedication(                  
+                  @ModelAttribute("prescriptionid") Integer prescriptionid,
+                  @ModelAttribute("medications") Integer medications,
+                  @ModelAttribute("indicationsforuse") String indicationsforuse
+        ){
+        System.out.println(prescriptionid);
+        System.out.println(medications);
+        System.out.println(indicationsforuse);
+        Prescriptiondeteil prescr = new Prescriptiondeteil();
+        prescr.setIndicationsforuse(indicationsforuse);
+        prescr.setIdmedication(medicationsService.getById(medications));
+        prescr.setIdprescription(prescriptionService.getById(prescriptionid));
+        prescriptiondeteilService.save(prescr);
+//        model.addAttribute("Specialalization",specService.getList());
+//        model.addAttribute("user",us);
+//        model.addAttribute("medications",medicationsService.getList());
+//        return "Doctor/addprescription";
+    }
+    
+    public Integer savereception(Integer idUser, Integer idprovisionaldiagnosis,
+            Integer idcard, String time, Reception reception){
         Card card = cardService.getById(idcard);
+        Integer i = null;
+        Provisionaldiagnosis provi =
+                provisionaldiagnosisService.getById(idprovisionaldiagnosis);
         reception.setIdCard(card);
-        System.out.println(reception.getIdCard());
-        System.out.println(reception.getIdUsers());
-        System.out.println(reception.getProvisionaldiagnosis());
-        System.out.println(reception.getComplaints());
-        System.out.println(reception.getStatus());
+        reception.setIdprovisionaldiagnosis(provi);
         Date da;
                try{
                 String[] s = time.split("-");
@@ -118,7 +202,8 @@ public class DoctorController {
                }catch (Exception ex){
                    
                }
-        receptionService.save(reception);
-        return "redirect:/doctors/doctorcabinet";
+        i = receptionService.save(reception);
+        return i;
+        
     }
 }

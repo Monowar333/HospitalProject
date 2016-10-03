@@ -30,7 +30,7 @@ public class ReceptionValidate implements  Validator{
     public void validate(Object target, Errors errors) {
        Reception reception = (Reception) target;
                 ValidationUtils.rejectIfEmptyOrWhitespace(errors, "complaints", "complaints.empty", "complaints must not be empty.");                
-                ValidationUtils.rejectIfEmptyOrWhitespace(errors, "provisionaldiagnosis", "provisionaldiagnosis.empty", "provisionaldiagnosis must not be empty.");          
+//                ValidationUtils.rejectIfEmptyOrWhitespace(errors, "provisionaldiagnosis", "provisionaldiagnosis.empty", "provisionaldiagnosis must not be empty.");          
     }
     
 }

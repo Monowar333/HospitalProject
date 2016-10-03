@@ -10,6 +10,12 @@ import HospitalWeb.service.CardService;
 import HospitalWeb.service.CardServiceImpl;
 import HospitalWeb.service.MedicationsService;
 import HospitalWeb.service.MedicationsServiceImpl;
+import HospitalWeb.service.PrescriptionService;
+import HospitalWeb.service.PrescriptionServiceImpl;
+import HospitalWeb.service.PrescriptiondeteilService;
+import HospitalWeb.service.PrescriptiondeteilServiceImpl;
+import HospitalWeb.service.ProvisionaldiagnosisService;
+import HospitalWeb.service.ProvisionaldiagnosisServiceImpl;
 import HospitalWeb.service.ReceptionService;
 import HospitalWeb.service.ReceptionServiceImpl;
 import HospitalWeb.service.SpecialalizationService;
@@ -56,7 +62,23 @@ public class ServiceConfig {
     }
     
        @Bean
-    public MedicationsService getMedicationsServicee(){
+    public MedicationsService getMedicationsService(){
         return new MedicationsServiceImpl();
     }
+    
+    @Bean
+    public PrescriptionService getPrescriptionService(){
+        return new PrescriptionServiceImpl();
+    }
+    
+    @Bean
+    public PrescriptiondeteilService getPrescriptiondeteilService(){
+        return new PrescriptiondeteilServiceImpl();
+    }
+    
+    @Bean
+    public ProvisionaldiagnosisService getProvisionaldiagnosisService(){
+        return new ProvisionaldiagnosisServiceImpl();
+    }
+    
 }

@@ -43,12 +43,14 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Reception.findByStatus", query = "SELECT r FROM Reception r WHERE r.status = :status")})
 public class Reception implements Serializable {
 
+    @JoinColumn(name = "idprovisionaldiagnosis", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Provisionaldiagnosis idprovisionaldiagnosis;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idreception", fetch = FetchType.LAZY)
     private List<Prescription> prescriptionList;
 
-    @Size(max = 300)
-    @Column(name = "provisionaldiagnosis")
-    private String provisionaldiagnosis;
+   
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 5000)
@@ -160,13 +162,7 @@ public class Reception implements Serializable {
         return "DB.entity.Reception[ id=" + id + " ]";
     }
 
-    public String getProvisionaldiagnosis() {
-        return provisionaldiagnosis;
-    }
-
-    public void setProvisionaldiagnosis(String provisionaldiagnosis) {
-        this.provisionaldiagnosis = provisionaldiagnosis;
-    }
+   
 
     public String getComplaints() {
         return complaints;
@@ -183,6 +179,14 @@ public class Reception implements Serializable {
 
     public void setPrescriptionList(List<Prescription> prescriptionList) {
         this.prescriptionList = prescriptionList;
+    }
+
+    public Provisionaldiagnosis getIdprovisionaldiagnosis() {
+        return idprovisionaldiagnosis;
+    }
+
+    public void setIdprovisionaldiagnosis(Provisionaldiagnosis idprovisionaldiagnosis) {
+        this.idprovisionaldiagnosis = idprovisionaldiagnosis;
     }
     
 }

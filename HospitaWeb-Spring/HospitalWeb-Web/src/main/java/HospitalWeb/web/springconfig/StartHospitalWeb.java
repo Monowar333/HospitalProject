@@ -35,8 +35,10 @@ public class StartHospitalWeb implements InitializingBean, DisposableBean  {
     @Override
     public void afterPropertiesSet() throws Exception {
         System.out.println("Start App");
-//         System.out.println(fromExelToDB.parse());
+        // System.out.println(fromExelToDB.parse());
 //          try{
+//              //fromExelToDB.FromExelToDBmedications();
+//             fromExelToDB.FromExelToDBprovisionaldiagnosis();
 ////           FromXMLtoDB.FromXMLtlDBDOM();
 ////            workWithXML.creatXML();
 //            }catch ( IOException ex){
