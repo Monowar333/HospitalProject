@@ -6,6 +6,7 @@
 package HospitalWeb.domain.DAO;
 
 import HospitalWeb.domain.Reception;
+import HospitalWeb.domain.Users;
 import java.util.List;
 
 /**

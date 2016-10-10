@@ -50,7 +50,17 @@ public class PrescriptionDAOImpl implements PrescriptionDAO{
 
     @Override
     public void remove(Prescription o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.getTransaction();
+        tx.begin();
+        try{
+            session.delete(o);
+            tx.commit();
+        }catch(Exception ex){
+            tx.rollback();
+        }finally{
+            session.close();
+        }
     }
 
     @Override

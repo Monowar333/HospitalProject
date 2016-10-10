@@ -6,6 +6,7 @@
 package HospitalWeb.service;
 
 import HospitalWeb.domain.DAO.PrescriptiondeteilDAO;
+import HospitalWeb.domain.Prescription;
 import HospitalWeb.domain.Prescriptiondeteil;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -87,5 +88,28 @@ public class PrescriptiondeteilServiceImpl implements PrescriptiondeteilService{
             throw ex;
         }
         return u;
+    }
+
+    @Override
+    public List<Prescriptiondeteil> getByIdprescription(Prescription idprescription) {
+   
+        List<Prescriptiondeteil> u = null;
+        try{
+            u = prescriptiondeteilDAO.getByIdprescription(idprescription);
+            if(u == null){
+                throw new ODEException("such user is not exist");
+            }
+        }catch(ODEException ex){
+            System.out.println("write log - user does not exist");
+            throw ex;
+        }catch(HibernateException ex){
+            System.out.println("hibernate exception occured");
+            throw ex;
+        }catch(Exception ex){
+            System.out.println((ex.getClass()).getName()+ " exception occured");
+            throw ex;
+        }
+        return u;
+    
     }
 }

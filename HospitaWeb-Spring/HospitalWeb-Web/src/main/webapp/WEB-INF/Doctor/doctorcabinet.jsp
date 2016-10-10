@@ -27,7 +27,7 @@
               if(button.id == 'b3'){
                 act.action =  "addreception";
               } else  if(button.id == 'b4'){
-                  act.action =  "adddoctors";
+                  act.action =  "listreception";
               }
                    act.submit();              
             }

@@ -6,7 +6,6 @@
 package HospitalWeb.controller.Doctors;
 
 import HospitalWeb.HelpClass.Creatnumbercard;
-import HospitalWeb.HelpClass.DateCreate;
 import HospitalWeb.domain.Card;
 import HospitalWeb.domain.Prescription;
 import HospitalWeb.domain.Prescriptiondeteil;
@@ -22,17 +21,19 @@ import HospitalWeb.service.ReceptionService;
 import HospitalWeb.service.SpecialalizationService;
 import HospitalWeb.service.UserService;
 import HospitalWeb.web.springconfig.ReceptionValidate;
-import HospitalWeb.web.springconfig.UserVAlidateUpdate;
-import HospitalWeb.web.springconfig.UsersValidate;
 import java.util.Date;
 import java.util.List;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -75,7 +76,7 @@ public class DoctorController {
      //    @Autowired
 //     SendMail sendMail;
      
-     @RequestMapping(value = {"**/doctors/doctorcabinet"}, method = {RequestMethod.GET})
+    @RequestMapping(value = {"**/doctors/doctorcabinet"}, method = {RequestMethod.GET})
     public ModelAndView getUsersList(){
         Users us = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         ModelAndView model = new ModelAndView();
@@ -83,6 +84,18 @@ public class DoctorController {
         model.addObject("Specialalization",specService.getList());
         model.setViewName("Doctor/doctorcabinet");
         model.addObject("user", userService.getById(us.getId()));
+        return model;
+    }
+    
+    @RequestMapping(value = {"**/doctors/listreception"}, method = {RequestMethod.POST})
+    public ModelAndView getReceptionList(){
+        Users us = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Users user1 = userService.getById(us.getId());
+        ModelAndView model = new ModelAndView();
+        List<Reception> receptionList = (List<Reception>) user1.getReceptionCollection();
+        model.addObject("Specialalization",specService.getList());
+        model.addObject("receptionlist",receptionList);
+        model.setViewName("Doctor/receptionlist");
         return model;
     }
     
@@ -104,6 +117,8 @@ public class DoctorController {
     
     @RequestMapping(value = {"**/doctors/savereceptionandprescription"}, method = {RequestMethod.POST})
     public String saveReceptionandprescription(
+                  HttpServletRequest request, 
+                  HttpServletResponse response,
                   Model model, 
                   @ModelAttribute("idUsers1") Integer idUsers,
                   @ModelAttribute("provisionaldiagnosis") Integer idprovisionaldiagnosis,
@@ -113,7 +128,6 @@ public class DoctorController {
                    BindingResult result
         ){
         Users us = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        reception.setIdUsers(us);
          receptionValidate.validate(reception, result);
                if(result.hasErrors()){
                     model.addAttribute("Specialalization",specService.getList());
@@ -123,14 +137,16 @@ public class DoctorController {
                     model.addAttribute("idcard1", cardService.getList());
                   return "Doctor/addreception";
                 }
-        Integer i = savereception(idUsers, idprovisionaldiagnosis, idcard, time, reception);
-        System.out.println(i + "///////////////");
+        reception.setIdUsers(us);
+        Integer i = savereception(idprovisionaldiagnosis, idcard, time, reception);
         Prescription pre = new Prescription();
         pre.setIdreception(receptionService.getById(i));
         Integer j = prescriptionService.save(pre);
+        Cookie cookie = new Cookie("prescriptionid", j.toString());
+        cookie.setMaxAge(3600);
+        response.addCookie(cookie);
         model.addAttribute("Specialalization",specService.getList());
         model.addAttribute("user",us);
-        model.addAttribute("prescriptionid",j);
         model.addAttribute("medications",medicationsService.getList());
         return "Doctor/addprescription";
     }
@@ -158,33 +174,55 @@ public class DoctorController {
                     model.addAttribute("idcard1", cardService.getList());
                   return "Doctor/addreception";
                 }
-        savereception(idUsers, idprovisionaldiagnosis, idcard, time, reception);
+        savereception(idprovisionaldiagnosis, idcard, time, reception);
         return "redirect:/doctors/doctorcabinet";
     }
     
     
     @RequestMapping(value = {"**/doctors/addmedication"}, method = {RequestMethod.POST})
     @ResponseBody
-    public void addmedication(                  
-                  @ModelAttribute("prescriptionid") Integer prescriptionid,
+    public void addmedication(
+                  @CookieValue(value = "prescriptionid", required = false) Cookie cookieName, 
+                  HttpServletRequest request,
                   @ModelAttribute("medications") Integer medications,
                   @ModelAttribute("indicationsforuse") String indicationsforuse
         ){
-        System.out.println(prescriptionid);
-        System.out.println(medications);
-        System.out.println(indicationsforuse);
+        System.out.println(cookieName);
         Prescriptiondeteil prescr = new Prescriptiondeteil();
         prescr.setIndicationsforuse(indicationsforuse);
         prescr.setIdmedication(medicationsService.getById(medications));
-        prescr.setIdprescription(prescriptionService.getById(prescriptionid));
+        prescr.setIdprescription(prescriptionService.getById(Integer.valueOf(cookieName.getValue())));
         prescriptiondeteilService.save(prescr);
-//        model.addAttribute("Specialalization",specService.getList());
-//        model.addAttribute("user",us);
-//        model.addAttribute("medications",medicationsService.getList());
-//        return "Doctor/addprescription";
     }
     
-    public Integer savereception(Integer idUser, Integer idprovisionaldiagnosis,
+   @RequestMapping(value = "**/downloadPDF", method = RequestMethod.GET)
+    public ModelAndView downloadMedicationList(
+         @CookieValue(value = "prescriptionid", required = false) Cookie cookieName
+        ) {
+        Prescription pre = prescriptionService.getById(Integer.valueOf
+                                                       (cookieName.getValue()));
+        List<Prescriptiondeteil> prescriptionDeteil = 
+                prescriptiondeteilService.getByIdprescription(pre);
+        return new ModelAndView("pdfView", "prescriptionDeteil", prescriptionDeteil);
+    }
+    
+    @RequestMapping(value = "**/watchMedicationLis/{id}", method = RequestMethod.GET)
+    public ModelAndView watchMedicationList(
+         @PathVariable("id")int id
+        ) { 
+        Reception rec = receptionService.getById(id);
+        System.out.println(rec.getPrescriptionList());
+        if(null != rec.getPrescriptionList()){
+        List<Prescriptiondeteil> prescriptionDeteil = 
+                prescriptiondeteilService.
+                        getByIdprescription(rec.getPrescriptionList().get(0));
+        return new ModelAndView("pdfView", "prescriptionDeteil", prescriptionDeteil);
+        }
+        ModelAndView model = new ModelAndView();
+        model.setViewName("Doctor/404");
+        return model;
+    }
+    public Integer savereception( Integer idprovisionaldiagnosis,
             Integer idcard, String time, Reception reception){
         Card card = cardService.getById(idcard);
         Integer i = null;

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Users xmlns="Hospital">
+  <User id="221">
+    <name>Admin</name>
+    <snme>Admin</snme>
+    <exp>0</exp>
+    <login>Admin</login>
+    <password>d033e22ae348aeb5660fc2140aec35850c4da997</password>
+    <email>Admin@gmail.com</email>
+    <telephone>0507572540</telephone>
+    <status>admin</status>
+    <idspecialization>42</idspecialization>
+    <statusregistr>true</statusregistr>
+    <statusWork>true</statusWork>
+    <linkaccept />
+  </User>
+  <User id="222">
+    <name>Евгений</name>
+    <snme>Корх</snme>
+    <exp>3</exp>
+    <login>Monowar</login>
+    <password>monowar</password>
+    <email>monowar333@gmail.com</email>
+    <telephone>+380507572540</telephone>
+    <status>doctors</status>
+    <idspecialization>32</idspecialization>
+    <statusregistr>true</statusregistr>
+    <statusWork>true</statusWork>
+    <linkaccept />
+  </User>
+  <User id="224">
+    <name>Василий</name>
+    <snme>Петровв</snme>
+    <exp>71</exp>
+    <login>WeeeeeW</login>
+    <password>weqweqwe</password>
+    <email>monwwwar333@gmail.com</email>
+    <telephone>0507572540</telephone>
+    <status>doctors</status>
+    <idspecialization>27</idspecialization>
+    <statusregistr>false</statusregistr>
+    <statusWork>false</statusWork>
+    <linkaccept />
+  </User>
+  <User id="226">
+    <name>23123</name>
+    <snme>23123</snme>
+    <exp>4</exp>
+    <login>weqweqwe</login>
+    <password>333</password>
+    <email>23123</email>
+    <telephone>2312323</telephone>
+    <status>doctors</status>
+    <idspecialization>37</idspecialization>
+    <statusregistr>true</statusregistr>
+    <statusWork>true</statusWork>
+    <linkaccept />
+  </User>
+  <User id="227">
+    <name>Alinacompany</name>
+    <snme>S</snme>
+    <exp>4</exp>
+    <login>Admin123</login>
+    <password>9a99c59b66ba09bbb2402baa42fb091d4ed4fff4</password>
+    <email>monowar3sdf33@gmail.com</email>
+    <telephone>0507572540</telephone>
+    <status>doctors</status>
+    <idspecialization>27</idspecialization>
+    <statusregistr>false</statusregistr>
+    <statusWork>false</statusWork>
+    <linkaccept />
+  </User>
+  <User id="235">
+    <name>Кемах</name>
+    <snme>Алина</snme>
+    <exp>3</exp>
+    <login>doc1993</login>
+    <password>23123123</password>
+    <email>alinakemakh@gmail.com</email>
+    <telephone>0632476105</telephone>
+    <status>doctors</status>
+    <idspecialization>37</idspecialization>
+    <statusregistr>true</statusregistr>
+    <statusWork>true</statusWork>
+    <linkaccept />
+  </User>
+  <User id="237">
+    <name>Мария</name>
+    <snme>Петровна</snme>
+    <exp>11</exp>
+    <login>Registry</login>
+    <password>1fd6a805dae745c87a8b89f1be1a738e608a1668</password>
+    <email>monowaqwr333@gmail.com</email>
+    <telephone>0507572540</telephone>
+    <status>registry</status>
+    <idspecialization>27</idspecialization>
+    <statusregistr>true</statusregistr>
+    <statusWork>true</statusWork>
+    <linkaccept />
+  </User>
+  <User id="308">
+    <name>Doctor</name>
+    <snme>Doctor</snme>
+    <exp>3</exp>
+    <login>Doctor</login>
+    <password>e2a84ab0e848d8c2b005edf6f9fe8d76ad030ddd</password>
+    <email>doctor@gmail.com</email>
+    <telephone>0507572540</telephone>
+    <status>doctors</status>
+    <idspecialization>27</idspecialization>
+    <statusregistr>true</statusregistr>
+    <statusWork>true</statusWork>
+    <linkaccept />
+  </User>
+</Users>

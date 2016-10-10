@@ -13,6 +13,15 @@
        <%@include file="/WEB-INF/AllUsers/Menu.jspf"%>
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
         <title>newreception</title>
+         <style>
+            select {
+             width: 300px; /* Ширина списка в пикселах */
+            }
+            TEXTAREA {
+                width: 300px; /* Ширина в процентах */
+                height: 300px; /* Высота в пикселах */
+               }
+           </style>
     </head>
     <body>
         <script> 
@@ -58,9 +67,9 @@
                                     <td>Статус приема:</td>
                                     <td>
                                         <select <form:input path="status"/> >
-                                            <option>new </option>
-                                           <option>repeat </option>
-                                           <option>close </option>
+                                            <option>new</option>
+                                           <option>repeat</option>
+                                           <option>close</option>
                                         </select>
                                     </td>
                             </tr>
@@ -78,7 +87,7 @@
                               <tr>
                                      <td>Диагнос:</td>
                                      <td>
-                                        <select name = "provisionaldiagnosis">
+                                        <select name = "provisionaldiagnosis" >
                                             <c:forEach var="item" items="${provisionaldiagnosis}">
                                                 <option value="${item.id}">${item.name}</option>
                                             </c:forEach>

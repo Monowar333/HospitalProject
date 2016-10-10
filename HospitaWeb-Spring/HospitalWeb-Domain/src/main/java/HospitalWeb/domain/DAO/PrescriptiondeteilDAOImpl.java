@@ -6,6 +6,7 @@
 package HospitalWeb.domain.DAO;
 
 import HospitalWeb.domain.HibernateUtil;
+import HospitalWeb.domain.Prescription;
 import HospitalWeb.domain.Prescriptiondeteil;
 import java.util.List;
 import org.hibernate.Criteria;
@@ -49,13 +50,33 @@ public class PrescriptiondeteilDAOImpl implements PrescriptiondeteilDAO{
 
     @Override
     public void remove(Prescriptiondeteil o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.getTransaction();
+        tx.begin();
+        try{
+            session.delete(o);
+            tx.commit();
+        }catch(Exception ex){
+            tx.rollback();
+        }finally{
+            session.close();
+        }
     }
 
     @Override
     public List<Prescriptiondeteil> getList() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Criteria crit = session.createCriteria(Prescriptiondeteil.class); 
+        List<Prescriptiondeteil> uList = (List<Prescriptiondeteil>)crit.list();
+        session.close();
+        return uList;   
+    }
+
+    @Override
+    public List<Prescriptiondeteil> getByIdprescription(Prescription idprescription) {
+        Session session = HibernateUtil.getSessionFactory().openSession();      
+        Criteria crit = session.createCriteria(Prescriptiondeteil.class)
+                .add(Restrictions.eq("idprescription", idprescription));
         List<Prescriptiondeteil> uList = (List<Prescriptiondeteil>)crit.list();
         session.close();
         return uList;   

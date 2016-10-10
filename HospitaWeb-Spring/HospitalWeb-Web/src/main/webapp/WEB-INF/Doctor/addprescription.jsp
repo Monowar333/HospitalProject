@@ -13,6 +13,15 @@
        <%@include file="/WEB-INF/AllUsers/Menu.jspf"%>
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
         <title>newreception</title>
+           <style>
+            select {
+             width: 300px; /* Ширина списка в пикселах */
+            }
+            TEXTAREA {
+                width: 300px; /* Ширина в процентах */
+                height: 300px; /* Высота в пикселах */
+               }
+           </style>
     </head>
     <body>
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
@@ -26,15 +35,13 @@
                 var prescriptionid;
                 medications = d.getElementById('medications').value;
                 indicationsforuse = d.getElementById('indicationsforuse').value;
-                prescriptionid = d.getElementById('prescriptionid').value;
                 $.ajax({
                     type: "POST",
                     url: 'doctors/addmedication',
-                    data: {prescriptionid:prescriptionid,medications:medications,indicationsforuse:indicationsforuse},
+                    data: {medications:medications,indicationsforuse:indicationsforuse},
                     success: function(data,status){
                         medications = $("#medications option:selected").text();
                         indicationsforuse = d.getElementById('indicationsforuse').value;
-                        prescriptionid = d.getElementById('prescriptionid').value;
 //                         // Считываем значения с формы
                         // Находим нужную таблицу
                         var tbody = d.getElementById('tab1').getElementsByTagName('TBODY')[0];
@@ -64,19 +71,13 @@
              
             }
         </script>      
-        <form method="post" id="Action" action="" >
+        <form method="post" id="Action" action="/downloadPDF" >
                     <table>
                             <tr>
                                     <td>Ваше Id:</td>
                                     <td><input name="idUsers1" value="${user.id}" readonly=""/></td>
 
-                            </tr>
-                             <tr>
-                                    <td>Ваше Id:</td>
-                                    <td><input id="prescriptionid" name="prescriptionid" value="${prescriptionid}" readonly=""/></td>
-
-                            </tr>
-                         
+                            </tr>                         
                               <tr>
                                      <td>Препарат:</td>
                                      <td>
@@ -90,7 +91,7 @@
                             
                             <tr>
                                     <td>Предписание к употреблению:</td>
-                                    <td><input type="text" name="indicationsforuse" id="indicationsforuse"/></td>
+                                    <td><textarea  name="indicationsforuse" id="indicationsforuse"/></textarea></td>
                             </tr>
                          
                             <tr>
@@ -99,6 +100,7 @@
                             </tr>
                     </table>
             </form>
+   <input type="submit"  value="Добавить"/>
                                     
                      <table id="tab1" class="sortable">
                         <thead>
@@ -110,6 +112,7 @@
                         <tbody>
                         </tbody>
                     </table>
+                     <a href="downloadPDF" >Сохранить и расспечатать</a>
     </body>
 </html>
 

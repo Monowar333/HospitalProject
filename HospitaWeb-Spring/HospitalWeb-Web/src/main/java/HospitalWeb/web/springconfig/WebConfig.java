@@ -7,6 +7,7 @@ package HospitalWeb.web.springconfig;
 
 
 
+import HospitalWeb.controller.Doctors.PDFBuilder;
 import HospitalWeb.Validate.ValidateRegular;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
+import org.springframework.web.servlet.view.ResourceBundleViewResolver;
 
 /**
  *
@@ -39,6 +41,7 @@ import org.springframework.web.servlet.view.JstlView;
                                 "HospitalWeb.web",
                                 "HospitalWeb.Validate.*",
                                 "HospitalWeb.controller.*",
+                                "HospitalWeb.Doctor.controller.pdf.PDFBuilder",
                                 "HospitalWeb.web.springconfig"
                                 
         
@@ -58,8 +61,20 @@ import org.springframework.web.servlet.view.JstlView;
          public InternalResourceViewResolver viewResolver() {
          InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
          viewResolver.setViewClass(JstlView.class);
+         viewResolver.setOrder(2);
          viewResolver.setPrefix("/WEB-INF/");
          viewResolver.setSuffix(".jsp");
+         return viewResolver;
+        }
+         
+         
+        @Bean
+         public ResourceBundleViewResolver viewResolver1() {
+         ResourceBundleViewResolver viewResolver = new ResourceBundleViewResolver();
+//        viewResolver.setViewClass(org.springframework.web.servlet.view.ResourceBundleViewResolver);
+//         viewResolver.setSuffix("views");
+        viewResolver.setOrder(1);
+         viewResolver.setBasename("views");
          return viewResolver;
         }
          

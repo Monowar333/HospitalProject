@@ -5,6 +5,7 @@
  */
 package HospitalWeb.service;
 
+import HospitalWeb.domain.Prescription;
 import HospitalWeb.domain.Prescriptiondeteil;
 import java.util.List;
 
@@ -17,4 +18,5 @@ public interface PrescriptiondeteilService {
     public int save(Prescriptiondeteil o);
     public void remove(Prescriptiondeteil o);
     public List<Prescriptiondeteil> getList();
+    public List<Prescriptiondeteil> getByIdprescription(Prescription idprescription);
 }
