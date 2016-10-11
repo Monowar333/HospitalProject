@@ -70,8 +70,11 @@ public class CardServiceImpl implements CardService{
        Integer i  = null;
         Card u = o;
         try{
+            if(u == null){
+                throw new ODEException("such user is not exist");
+            }
             i = cardDAO.save(o);
-            if(0 == i){
+            if(-1 == i){
                 throw new ODEException("invalid save");
             }
         }catch(ODEException ex){
@@ -154,7 +157,7 @@ public class CardServiceImpl implements CardService{
     public void changeStatus(int id) {
         Integer i = id;
         try{
-             if(i == null){
+             if(null == i){
                 throw new ODEException("such user is not exist");
             }
             cardDAO.changeStatus(i);

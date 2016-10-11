@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="10" failures="0" name="HospitalWeb.service.Test.UserServiceTest" time="0.326" errors="0" skipped="0">
+<testsuite tests="20" failures="0" name="HospitalWeb.service.Test.UserServiceTest" time="0.028" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files (x86)\Java\jdk1.8.0_51\jre\bin"/>
@@ -61,14 +61,24 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="pentium_pro+mmx pentium_pro pentium+mmx pentium i486 i386 i86"/>
   </properties>
-  <testcase classname="HospitalWeb.service.Test.UserServiceTest" name="getByEmailTest_1" time="0.199"/>
-  <testcase classname="HospitalWeb.service.Test.UserServiceTest" name="getByBySpecAndStWorkTest_1" time="0"/>
-  <testcase classname="HospitalWeb.service.Test.UserServiceTest" name="getByLinckAcceptTest_1" time="0"/>
-  <testcase classname="HospitalWeb.service.Test.UserServiceTest" name="getBySpecTest_1" time="0.001"/>
-  <testcase classname="HospitalWeb.service.Test.UserServiceTest" name="removeTest_1" time="0.006"/>
+  <testcase classname="HospitalWeb.service.Test.UserServiceTest" name="getByEmailTest_1" time="0.016"/>
+  <testcase classname="HospitalWeb.service.Test.UserServiceTest" name="getByEmailTest_2" time="0.002"/>
+  <testcase classname="HospitalWeb.service.Test.UserServiceTest" name="getByBySpecAndStWorkTest_1" time="0.001"/>
+  <testcase classname="HospitalWeb.service.Test.UserServiceTest" name="getByBySpecAndStWorkTest_2" time="0.001"/>
+  <testcase classname="HospitalWeb.service.Test.UserServiceTest" name="getByLinckAcceptTest_1" time="0.001"/>
+  <testcase classname="HospitalWeb.service.Test.UserServiceTest" name="getByLinckAcceptTest_2" time="0.001"/>
+  <testcase classname="HospitalWeb.service.Test.UserServiceTest" name="updateTest_1" time="0.001"/>
+  <testcase classname="HospitalWeb.service.Test.UserServiceTest" name="getBySpecTest_1" time="0"/>
+  <testcase classname="HospitalWeb.service.Test.UserServiceTest" name="getBySpecTest_2" time="0.002"/>
+  <testcase classname="HospitalWeb.service.Test.UserServiceTest" name="removeTest_1" time="0"/>
+  <testcase classname="HospitalWeb.service.Test.UserServiceTest" name="getListTest_1" time="0"/>
+  <testcase classname="HospitalWeb.service.Test.UserServiceTest" name="getListTest_2" time="0.001"/>
   <testcase classname="HospitalWeb.service.Test.UserServiceTest" name="getSaveTest_1" time="0"/>
-  <testcase classname="HospitalWeb.service.Test.UserServiceTest" name="getByAuntificationTest_1" time="0.001"/>
+  <testcase classname="HospitalWeb.service.Test.UserServiceTest" name="getSaveTest_2" time="0"/>
+  <testcase classname="HospitalWeb.service.Test.UserServiceTest" name="getByAuntificationTest_1" time="0"/>
+  <testcase classname="HospitalWeb.service.Test.UserServiceTest" name="getByAuntificationTest_2" time="0"/>
   <testcase classname="HospitalWeb.service.Test.UserServiceTest" name="getByLoginTest_1" time="0"/>
-  <testcase classname="HospitalWeb.service.Test.UserServiceTest" name="getByIdTest_1" time="0.001"/>
-  <testcase classname="HospitalWeb.service.Test.UserServiceTest" name="getByIdTest_2" time="0.001"/>
+  <testcase classname="HospitalWeb.service.Test.UserServiceTest" name="getByLoginTest_2" time="0"/>
+  <testcase classname="HospitalWeb.service.Test.UserServiceTest" name="getByIdTest_1" time="0"/>
+  <testcase classname="HospitalWeb.service.Test.UserServiceTest" name="getByIdTest_2" time="0"/>
 </testsuite>

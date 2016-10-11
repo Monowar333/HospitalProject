@@ -47,7 +47,7 @@ public class CardsDAOImpl implements CardsDAO {
             result = (Integer)session.save(o);
             tx.commit();
         }catch(Exception ex){
-            result = 0;
+            result = -1;
             tx.rollback();
         }finally{
             session.close();

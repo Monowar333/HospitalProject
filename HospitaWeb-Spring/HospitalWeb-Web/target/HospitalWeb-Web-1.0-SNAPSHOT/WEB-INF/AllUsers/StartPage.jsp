@@ -8,7 +8,7 @@
     </head>
     <body>
          <h3>Наши новости</h3>
-        <article>
+<!--        <article>
         <div>
          <div class="inner">
             <div class="main">
@@ -41,7 +41,7 @@
             </div>
         </div>
         </div>
-        </article>
+        </article>-->
         
     </body>
 </html>

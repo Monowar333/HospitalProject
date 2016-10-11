@@ -159,9 +159,9 @@ public class UserServiceImpl implements UserService{
         List<Users> u = null;
         try{
             u = usersDao.getBySpecAndStWork(idspecialization);
-//            if(u == null){
-//                throw new ODEException("such user is not exist");
-//            }
+            if(u == null){
+                throw new ODEException("such user is not exist");
+            }
         }catch(ODEException ex){
             System.out.println("write log - user does not exist");
             throw ex;
@@ -184,7 +184,7 @@ public class UserServiceImpl implements UserService{
                 throw new ODEException("such user is not exist");
             }
             i = usersDao.save(u);
-            if( 0 == i){
+            if( -1 == i){
                 throw new ODEException("invalid save");
             }
         }catch(ODEException ex){
@@ -249,7 +249,6 @@ public class UserServiceImpl implements UserService{
         List<Users> u = null;
         try{
             u = usersDao.getList();
-            System.out.println(u.get(0));
             if(null == u){
                 throw new ODEException("such user is not exist");
             }

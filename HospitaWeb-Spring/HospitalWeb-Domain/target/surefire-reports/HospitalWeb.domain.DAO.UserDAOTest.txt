@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: HospitalWeb.domain.DAO.UserDAOTest
 -------------------------------------------------------------------------------
-Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.384 sec
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.386 sec
